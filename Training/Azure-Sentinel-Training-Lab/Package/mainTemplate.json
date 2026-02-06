@@ -32,6 +32,13 @@
                 "description": "Appended to workbook displayNames to make them unique"
             }
         },
+        "artifactsVersion": {
+            "type": "string",
+            "defaultValue": "[utcNow('yyyyMMddHHmmss')]",
+            "metadata": {
+                "description": "Cache-busting version for linked templates"
+            }
+        },
         "workbook1-name": {
             "type": "string",
             "defaultValue": "",
@@ -90,7 +97,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/workspace.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/workspace.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -119,7 +126,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/ingestEvents.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/ingestEvents.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -139,7 +146,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/alertRules.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/alertRules.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -159,7 +166,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/playbook.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/playbook.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -179,7 +186,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/workbook.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/workbook.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -202,7 +209,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(variables('_artifactsLocation'), 'Artifacts/LinkedTemplates/watchlist.json')]",
+                    "uri": "[uri(variables('_artifactsLocation'), concat('Artifacts/LinkedTemplates/watchlist.json?v=', parameters('artifactsVersion')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
