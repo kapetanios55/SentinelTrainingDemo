@@ -39,6 +39,13 @@
                 "description": "Cache-busting version for linked templates"
             }
         },
+        "scheduleStartTime": {
+            "type": "string",
+            "defaultValue": "[dateTimeAdd(utcNow(), 'PT5M')]",
+            "metadata": {
+                "description": "UTC start time for the one-time ingestion schedule"
+            }
+        },
         "enableIngestion": {
             "type": "bool",
             "defaultValue": true,
@@ -141,6 +148,9 @@
                 "parameters": {
                     "WorkspaceName": {
                         "value": "[parameters('workspace')]"
+                    },
+                    "scheduleStartTime": {
+                        "value": "[parameters('scheduleStartTime')]"
                     }
                 }
             }
