@@ -46,6 +46,13 @@
                 "description": "Whether to run the ingestEvents deployment script. Disabled for tenants that block storage account key auth."
             }
         },
+        "enableAlertRules": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Whether to deploy alert rules from linked templates. Disabled to avoid linked-template cache issues."
+            }
+        },
         "workbook1-name": {
             "type": "string",
             "defaultValue": "",
@@ -148,6 +155,7 @@
             "name": "alertRules",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
+            "condition": "[parameters('enableAlertRules')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments','workbook')]"
             ],
