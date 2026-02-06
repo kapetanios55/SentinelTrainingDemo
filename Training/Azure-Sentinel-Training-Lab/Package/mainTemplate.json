@@ -39,6 +39,13 @@
                 "description": "Cache-busting version for linked templates"
             }
         },
+        "enableIngestion": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Whether to run the ingestEvents deployment script. Disabled for tenants that block storage account key auth."
+            }
+        },
         "workbook1-name": {
             "type": "string",
             "defaultValue": "",
@@ -120,6 +127,7 @@
             "name": "ingestEvents",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
+            "condition": "[parameters('enableIngestion')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'workspaceCreation')]"
             ],
