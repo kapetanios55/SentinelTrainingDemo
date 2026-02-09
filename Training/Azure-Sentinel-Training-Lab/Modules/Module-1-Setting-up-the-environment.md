@@ -59,7 +59,7 @@ In this exercise you will deploy the Training Lab solution into your existing wo
 
 Click the button below to deploy the lab environment directly into your Azure subscription:
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FAzure-Sentinel%2Fmaster%2FTraining%2FAzure-Sentinel-Training-Lab%2FPackage%2FmainTemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkapetanios55%2FSentinelTrainingDemo%2Fmaster%2FTraining%2FAzure-Sentinel-Training-Lab%2FPackage%2FmainTemplate.json)
 
 Alternatively, you can deploy from the Azure Marketplace:
 
