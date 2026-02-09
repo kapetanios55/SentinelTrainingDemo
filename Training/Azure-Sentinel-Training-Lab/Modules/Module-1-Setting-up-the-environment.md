@@ -57,6 +57,12 @@ Click **Review + create** and then **Create** after the validation completes. Th
 
 In this exercise you will deploy the Training Lab solution into your existing workspace. This will ingest pre-recorded data (~20 MB) and create several other artifacts that will be used during the exercises.
 
+Click the button below to deploy the lab environment directly into your Azure subscription:
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FAzure-Sentinel%2Fmaster%2FTraining%2FAzure-Sentinel-Training-Lab%2FPackage%2FmainTemplate.json)
+
+Alternatively, you can deploy from the Azure Marketplace:
+
 1. In the Azure Portal, go to the top search bar and type *Microsoft Sentinel Training*. Select the **Microsoft Sentinel Training Lab Solution** marketplace item.
 
 ![deployment](../Images/deployment5.png)
