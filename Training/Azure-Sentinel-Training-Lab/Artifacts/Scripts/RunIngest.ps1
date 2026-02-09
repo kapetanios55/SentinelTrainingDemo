@@ -11,8 +11,8 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$WorkspaceName,
 
-    [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
-    [string]$RepoRootName = "SentinelTrainingDemo-master"
+    [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/demo-only.zip",
+    [string]$RepoRootName = "SentinelTrainingDemo-demo-only"
 )
 
 $ErrorActionPreference = "Stop"
@@ -23,7 +23,7 @@ Connect-AzAccount -Identity | Out-Null
 $workdir = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
 $repoZip = Join-Path -Path $workdir -ChildPath "repo.zip"
 $repoDir = Join-Path -Path $workdir -ChildPath $RepoRootName
-$scriptPath = Join-Path -Path $workdir -ChildPath "IngestCSV.ps1"
+$scriptPath = Join-Path -Path $repoDir -ChildPath "Training/Azure-Sentinel-Training-Lab/Artifacts/Scripts/IngestCSV.ps1"
 
 if (-not (Test-Path -Path $workdir)) {
     New-Item -ItemType Directory -Path $workdir | Out-Null
@@ -35,13 +35,21 @@ if (Test-Path -Path $repoDir) {
 }
 Expand-Archive -Path $repoZip -DestinationPath $workdir -Force
 
-$telemetryPath = Join-Path -Path $repoDir -ChildPath "Training/Azure-Sentinel-Training-Lab/Artifacts/Telemetry"
+$customTelemetryPath = Join-Path -Path $repoDir -ChildPath "Training/Azure-Sentinel-Training-Lab/Artifacts/Telemetry/Custom"
+$builtInTelemetryPath = Join-Path -Path $repoDir -ChildPath "Training/Azure-Sentinel-Training-Lab/Artifacts/Telemetry/BuildIn"
 $templatesPath = Join-Path -Path $workdir -ChildPath "DCRTemplates"
 if (-not (Test-Path -Path $templatesPath)) {
     New-Item -ItemType Directory -Path $templatesPath | Out-Null
 }
 
-$scriptUrl = "https://raw.githubusercontent.com/kapetanios55/SentinelTrainingDemo/master/Training/Azure-Sentinel-Training-Lab/Artifacts/Scripts/IngestCSV.ps1"
-Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-
-& $scriptPath -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName -Location $Location -WorkspaceName $WorkspaceName -TelemetryPath $telemetryPath -TemplatesOutputPath $templatesPath -Deploy -Ingest
+& $scriptPath \
+    -SubscriptionId $SubscriptionId \
+    -ResourceGroupName $ResourceGroupName \
+    -Location $Location \
+    -WorkspaceName $WorkspaceName \
+    -TelemetryPath $customTelemetryPath \
+    -BuiltInTelemetryPath $builtInTelemetryPath \
+    -TemplatesOutputPath $templatesPath \
+    -DeployBuiltInDcr \
+    -Deploy \
+    -Ingest
