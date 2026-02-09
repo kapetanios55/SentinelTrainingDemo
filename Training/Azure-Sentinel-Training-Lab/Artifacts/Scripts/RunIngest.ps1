@@ -11,8 +11,8 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$WorkspaceName,
 
-    [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/demo-only.zip",
-    [string]$RepoRootName = "SentinelTrainingDemo-demo-only"
+    [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
+    [string]$RepoRootName = "SentinelTrainingDemo-master"
 )
 
 $ErrorActionPreference = "Stop"
