@@ -228,7 +228,7 @@
                             ],
                             "properties": {
                                 "isEncrypted": false,
-                                "value": "[subscription().subscriptionId]"
+                                "value": "[concat('\"', subscription().subscriptionId, '\"')]"
                             }
                         },
                         {
@@ -240,7 +240,7 @@
                             ],
                             "properties": {
                                 "isEncrypted": false,
-                                "value": "[resourceGroup().name]"
+                                "value": "[concat('\"', resourceGroup().name, '\"')]"
                             }
                         },
                         {
@@ -252,7 +252,7 @@
                             ],
                             "properties": {
                                 "isEncrypted": false,
-                                "value": "[resourceGroup().location]"
+                                "value": "[concat('\"', resourceGroup().location, '\"')]"
                             }
                         },
                         {
@@ -264,7 +264,7 @@
                             ],
                             "properties": {
                                 "isEncrypted": false,
-                                "value": "[parameters('WorkspaceName')]"
+                                "value": "[concat('\"', parameters('WorkspaceName'), '\"')]"
                             }
                         },
                         {
