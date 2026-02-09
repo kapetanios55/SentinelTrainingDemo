@@ -1,14 +1,10 @@
 param(
-    [Parameter(Mandatory = $true)]
     [string]$SubscriptionId,
 
-    [Parameter(Mandatory = $true)]
     [string]$ResourceGroupName,
 
-    [Parameter(Mandatory = $true)]
     [string]$Location,
 
-    [Parameter(Mandatory = $true)]
     [string]$WorkspaceName,
 
     [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
@@ -19,6 +15,44 @@ $ErrorActionPreference = "Stop"
 
 Import-Module Az.Accounts -ErrorAction Stop
 Connect-AzAccount -Identity | Out-Null
+
+function Get-OptionalAutomationVariableValue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Name
+    )
+
+    try {
+        return Get-AutomationVariable -Name $Name
+    }
+    catch {
+        return $null
+    }
+}
+
+if (-not $SubscriptionId) {
+    $SubscriptionId = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingSubscriptionId'
+}
+if (-not $ResourceGroupName) {
+    $ResourceGroupName = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingResourceGroupName'
+}
+if (-not $Location) {
+    $Location = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingLocation'
+}
+if (-not $WorkspaceName) {
+    $WorkspaceName = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingWorkspaceName'
+}
+
+if (-not $SubscriptionId) {
+    $context = Get-AzContext
+    if ($context -and $context.Subscription -and $context.Subscription.Id) {
+        $SubscriptionId = $context.Subscription.Id
+    }
+}
+
+if (-not $SubscriptionId -or -not $ResourceGroupName -or -not $Location -or -not $WorkspaceName) {
+    throw "Missing required runbook parameters. Provide SubscriptionId/ResourceGroupName/Location/WorkspaceName via jobSchedule parameters or set Automation variables: SentinelTrainingSubscriptionId, SentinelTrainingResourceGroupName, SentinelTrainingLocation, SentinelTrainingWorkspaceName."
+}
 
 $workdir = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
 $repoZip = Join-Path -Path $workdir -ChildPath "repo.zip"

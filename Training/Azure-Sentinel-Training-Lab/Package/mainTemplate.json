@@ -220,12 +220,64 @@
                             }
                         },
                         {
+                            "type": "Microsoft.Automation/automationAccounts/variables",
+                            "apiVersion": "2020-01-13-preview",
+                            "name": "[concat(variables('automationAccountName'), '/SentinelTrainingSubscriptionId')]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+                            ],
+                            "properties": {
+                                "isEncrypted": false,
+                                "value": "[subscription().subscriptionId]"
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Automation/automationAccounts/variables",
+                            "apiVersion": "2020-01-13-preview",
+                            "name": "[concat(variables('automationAccountName'), '/SentinelTrainingResourceGroupName')]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+                            ],
+                            "properties": {
+                                "isEncrypted": false,
+                                "value": "[resourceGroup().name]"
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Automation/automationAccounts/variables",
+                            "apiVersion": "2020-01-13-preview",
+                            "name": "[concat(variables('automationAccountName'), '/SentinelTrainingLocation')]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+                            ],
+                            "properties": {
+                                "isEncrypted": false,
+                                "value": "[resourceGroup().location]"
+                            }
+                        },
+                        {
+                            "type": "Microsoft.Automation/automationAccounts/variables",
+                            "apiVersion": "2020-01-13-preview",
+                            "name": "[concat(variables('automationAccountName'), '/SentinelTrainingWorkspaceName')]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+                            ],
+                            "properties": {
+                                "isEncrypted": false,
+                                "value": "[parameters('WorkspaceName')]"
+                            }
+                        },
+                        {
                             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
                             "apiVersion": "2019-06-01",
                             "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), 'IngestTrainingTelemetry', parameters('scheduleName')))]",
                             "dependsOn": [
                                 "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName'), 'IngestTrainingTelemetry')]",
-                                "[resourceId('Microsoft.Automation/automationAccounts/schedules', variables('automationAccountName'), parameters('scheduleName'))]"
+                                "[resourceId('Microsoft.Automation/automationAccounts/schedules', variables('automationAccountName'), parameters('scheduleName'))]",
+                                "[resourceId('Microsoft.Automation/automationAccounts/variables', variables('automationAccountName'), 'SentinelTrainingSubscriptionId')]",
+                                "[resourceId('Microsoft.Automation/automationAccounts/variables', variables('automationAccountName'), 'SentinelTrainingResourceGroupName')]",
+                                "[resourceId('Microsoft.Automation/automationAccounts/variables', variables('automationAccountName'), 'SentinelTrainingLocation')]",
+                                "[resourceId('Microsoft.Automation/automationAccounts/variables', variables('automationAccountName'), 'SentinelTrainingWorkspaceName')]"
                             ],
                             "properties": {
                                 "runbook": {
