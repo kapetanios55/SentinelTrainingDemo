@@ -202,7 +202,7 @@
                                 "logProgress": true,
                                 "logVerbose": true,
                                 "publishContentLink": {
-                                    "uri": "https://raw.githubusercontent.com/kapetanios55/SentinelTrainingDemo/master/Training/Azure-Sentinel-Training-Lab/Artifacts/Scripts/RunIngest.ps1"
+                                    "uri": "[concat('https://raw.githubusercontent.com/kapetanios55/SentinelTrainingDemo/master/Training/Azure-Sentinel-Training-Lab/Artifacts/Scripts/RunIngest.ps1', '?v=', parameters('scheduleName'))]"
                                 }
                             }
                         },
