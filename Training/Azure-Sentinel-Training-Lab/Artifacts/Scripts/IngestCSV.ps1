@@ -151,7 +151,7 @@ if (-not $TelemetryPath) {
 
 if (-not $BuiltInTelemetryPath) {
     $basePath = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
-    $BuiltInTelemetryPath = Join-Path -Path $basePath -ChildPath "..\Telemetry\BuiltIn"
+    $BuiltInTelemetryPath = Join-Path -Path $basePath -ChildPath "..\Telemetry\BuildIn"
 }
 
 if (-not $TemplatesOutputPath) {
