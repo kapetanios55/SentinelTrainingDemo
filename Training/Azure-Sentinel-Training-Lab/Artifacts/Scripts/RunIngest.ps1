@@ -30,7 +30,7 @@ function Get-OptionalAutomationVariableValue {
     }
 }
 
-function Normalize-RunbookStringValue {
+function ConvertTo-RunbookStringValue {
     param(
         [AllowNull()]
         [string]$Value
@@ -64,10 +64,10 @@ if (-not $SubscriptionId) {
     }
 }
 
-$SubscriptionId = Normalize-RunbookStringValue -Value $SubscriptionId
-$ResourceGroupName = Normalize-RunbookStringValue -Value $ResourceGroupName
-$Location = Normalize-RunbookStringValue -Value $Location
-$WorkspaceName = Normalize-RunbookStringValue -Value $WorkspaceName
+$SubscriptionId = ConvertTo-RunbookStringValue -Value $SubscriptionId
+$ResourceGroupName = ConvertTo-RunbookStringValue -Value $ResourceGroupName
+$Location = ConvertTo-RunbookStringValue -Value $Location
+$WorkspaceName = ConvertTo-RunbookStringValue -Value $WorkspaceName
 
 if (-not $SubscriptionId -or -not $ResourceGroupName -or -not $Location -or -not $WorkspaceName) {
     throw "Missing required runbook parameters. Provide SubscriptionId/ResourceGroupName/Location/WorkspaceName via jobSchedule parameters or set Automation variables: SentinelTrainingSubscriptionId, SentinelTrainingResourceGroupName, SentinelTrainingLocation, SentinelTrainingWorkspaceName."
