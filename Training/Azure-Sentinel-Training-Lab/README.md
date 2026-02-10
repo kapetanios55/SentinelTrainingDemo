@@ -13,6 +13,47 @@ The lab deploys a Microsoft Sentinel workspace and ingests pre-recorded data to 
 
 To deploy the Microsoft Sentinel Training Lab, **you must have a Microsoft Azure subscription**. If you do not have an existing Azure subscription, you can sign up for a free trial [here](https://azure.microsoft.com/free/).
 
+### Custom Detection Rules (optional)
+
+The lab can automatically deploy **custom detection rules** to Microsoft 365 Defender via the Microsoft Graph Security API. This requires a **User-Assigned Managed Identity (UAMI)** with the `CustomDetection.ReadWrite.All` Microsoft Graph application permission, created **before** deploying the template.
+
+#### 1. Create the User-Assigned Managed Identity
+
+```powershell
+# Create the UAMI (adjust resource group and name as needed)
+az identity create `
+  --resource-group <your-resource-group> `
+  --name SentinelDetectionRulesIdentity
+```
+
+#### 2. Grant the Microsoft Graph permission
+
+```powershell
+# Variables
+$miObjectId   = (az identity show --resource-group <your-resource-group> --name SentinelDetectionRulesIdentity --query principalId -o tsv)
+$graphAppId   = "00000003-0000-0000-c000-000000000000"   # Microsoft Graph
+$appRoleId    = "e0fd9c8d-a12e-4cc9-9827-20c8c3cd6fb8"   # CustomDetection.ReadWrite.All
+
+# Get the Microsoft Graph service principal
+$graphSpId = (az ad sp show --id $graphAppId --query id -o tsv)
+
+# Assign the app role to the managed identity
+az rest --method POST `
+  --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$graphSpId/appRoleAssignedTo" `
+  --headers "Content-Type=application/json" `
+  --body "{\"principalId\":\"$miObjectId\",\"resourceId\":\"$graphSpId\",\"appRoleId\":\"$appRoleId\"}"
+```
+
+#### 3. Deploy the template
+
+Pass the UAMI's **full resource ID** as the `detectionRulesIdentityResourceId` parameter when deploying:
+
+```
+/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/SentinelDetectionRulesIdentity
+```
+
+> **Note:** If you skip this parameter, detection rules will not be deployed, but the rest of the lab (workspace, ingestion, alert rules, workbook, etc.) will work normally.
+
 ## Log ingestion (modern API)
 
 The training lab includes a script that uses the Azure Monitor Logs Ingestion API to ingest **custom tables only** (tables ending with `_CL`). Built-in tables are not ingested by this API and should be populated via their native data connectors instead.
