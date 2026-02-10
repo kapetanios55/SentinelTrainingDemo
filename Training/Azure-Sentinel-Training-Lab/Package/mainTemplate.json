@@ -19,7 +19,6 @@
             }
         },
         "workspace": {
-            "defaultValue": "",
             "type": "string",
             "metadata": {
                 "description": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol"
@@ -39,9 +38,9 @@
                 "description": "Cache-busting version for linked templates"
             }
         },
-        "scheduleStartTime": {
+        "scheduleStartTime":{
             "type": "string",
-            "defaultValue": "[dateTimeAdd(utcNow(), 'PT30M')]",
+            "defaultValue": "[dateTimeAdd(utcNow('yyyy-MM-ddTHH:mm:ssZ'), 'PT30M')]",
             "metadata": {
                 "description": "UTC start time for the one-time ingestion schedule"
             }
@@ -90,7 +89,6 @@
         "huntingQueryContentId2": "ATLsolorigateInventoryCheck",
         "_huntingQueryContentId2": "[variables('huntingQueryContentId2')]",
         "automationAccountName": "[concat('sentineltraining', uniqueString(resourceGroup().id))]",
-        "runbookName": "IngestTrainingTelemetry",
         "scheduleName": "[concat('IngestTrainingTelemetryOnce-', uniqueString(resourceGroup().id, deployment().name))]"
     },
     "resources": [
@@ -171,8 +169,7 @@
                     },
                     "functions": [],
                     "variables": {
-                        "automationAccountName": "[concat('sentineltraining', uniqueString(resourceGroup().id))]",
-                        "runbookName": "IngestTrainingTelemetry"
+                        "automationAccountName": "[concat('sentineltraining', uniqueString(resourceGroup().id))]"
                     },
                     "resources": [
                         {
@@ -443,6 +440,9 @@
         {
             "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
             "apiVersion": "2021-03-01-preview",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments','workspaceCreation')]"
+            ],
             "properties": {
                 "version": "1.0.5",
                 "kind": "Solution",
