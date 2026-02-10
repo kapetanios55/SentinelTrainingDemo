@@ -18,10 +18,10 @@
                 "description": "Region to deploy solution resources"
             }
         },
-        "workspace": {
+        "workspaceName": {
             "type": "string",
             "metadata": {
-                "description": "The workspace name should include 4-63 letters, digits or '-'. The '-' shouldn't be the first or the last symbol"
+                "description": "The Log Analytics workspace name (4-63 letters, digits or '-'). The '-' shouldn't be the first or the last symbol"
             }
         },
         "formattedTimeNow": {
@@ -54,7 +54,7 @@
         },
         "workbook1-name": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "LabWorkbook",
             "metadata": {
                 "description": "Name for the workbook"
             }
@@ -117,7 +117,7 @@
                 },
                 "parameters": {
                     "workspaceName": {
-                        "value": "[parameters('workspace')]"
+                        "value": "[parameters('workspaceName')]"
                     },
                     "pricingTier": {
                         "value": "PerGB2018"
@@ -301,7 +301,7 @@
                 },
                 "parameters": {
                     "WorkspaceName": {
-                        "value": "[parameters('workspace')]"
+                        "value": "[parameters('workspaceName')]"
                     },
                     "scheduleStartTime": {
                         "value": "[parameters('scheduleStartTime')]"
@@ -369,7 +369,7 @@
                 },
                 "parameters": {
                     "workspaceName": {
-                        "value": "[parameters('workspace')]"
+                        "value": "[parameters('workspaceName')]"
                     }
                 }
             }
@@ -432,7 +432,7 @@
                 },
                 "parameters": {
                     "workspaceName": {
-                       "value": "[parameters('workspace')]"
+                       "value": "[parameters('workspaceName')]"
                     }
                 }
             }
@@ -515,7 +515,7 @@
                     "domains": [ "Training and Tutorials" ]
                 }
             },
-            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/', variables('_sourceId'))]"
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/', variables('_sourceId'))]"
         }
     ],
     "outputs": {

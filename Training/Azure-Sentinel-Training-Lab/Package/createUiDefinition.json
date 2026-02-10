@@ -208,7 +208,7 @@
       "outputs": {
         "workspace-location": "[resourceGroup().location]",
         "location": "[location()]",
-        "workspace": "[basics('workspace')]",
+        "workspaceName": "[basics('workspace')]",
         "workbook1-name": "[steps('workbooks').workbook1.workbook1-name]",
         "playbook1-PlaybookName": "[steps('playbooks').playbook1.playbook1-PlaybookName]"
       }
