@@ -7,10 +7,16 @@
             "metadata": {
                 "description": "UTC start time for the one-time detection-rules schedule (should run before data ingestion)"
             }
+        },
+        "userAssignedIdentityResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Full resource ID of a pre-created User-Assigned Managed Identity that has been granted the Microsoft Graph CustomDetection.ReadWrite.All application permission"
+            }
         }
     },
     "variables": {
-        "automationAccountName": "[concat('sentineltraining', uniqueString(resourceGroup().id))]",
+        "automationAccountName": "[concat('sentineldetections', uniqueString(resourceGroup().id))]",
         "runbookName": "DeployDetectionRules",
         "scheduleName": "DeployDetectionRulesOnce"
     },
@@ -21,7 +27,10 @@
             "name": "[variables('automationAccountName')]",
             "location": "[resourceGroup().location]",
             "identity": {
-                "type": "SystemAssigned"
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[parameters('userAssignedIdentityResourceId')]": {}
+                }
             },
             "properties": {
                 "sku": {
@@ -60,12 +69,25 @@
             }
         },
         {
+            "type": "Microsoft.Automation/automationAccounts/variables",
+            "apiVersion": "2020-01-13-preview",
+            "name": "[concat(variables('automationAccountName'), '/DetectionRulesManagedIdentityClientId')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
+            ],
+            "properties": {
+                "isEncrypted": false,
+                "value": "[concat('\"', reference(parameters('userAssignedIdentityResourceId'), '2023-01-31').clientId, '\"')]"
+            }
+        },
+        {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2019-06-01",
             "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), variables('runbookName'), variables('scheduleName')))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName'), variables('runbookName'))]",
-                "[resourceId('Microsoft.Automation/automationAccounts/schedules', variables('automationAccountName'), variables('scheduleName'))]"
+                "[resourceId('Microsoft.Automation/automationAccounts/schedules', variables('automationAccountName'), variables('scheduleName'))]",
+                "[resourceId('Microsoft.Automation/automationAccounts/variables', variables('automationAccountName'), 'DetectionRulesManagedIdentityClientId')]"
             ],
             "properties": {
                 "runbook": {
@@ -77,10 +99,5 @@
             }
         }
     ],
-    "outputs": {
-        "principalId": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName')), '2019-06-01', 'Full').identity.principalId]"
-        }
-    }
+    "outputs": {}
 }

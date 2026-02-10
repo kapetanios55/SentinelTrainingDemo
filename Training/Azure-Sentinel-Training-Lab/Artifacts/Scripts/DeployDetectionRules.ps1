@@ -8,12 +8,20 @@
     rule by POSTing to:
         POST https://graph.microsoft.com/beta/security/rules/detectionRules
 
-    The script authenticates using the Automation Account's managed identity
-    and acquires a token for Microsoft Graph.  Existing rules whose
-    displayName already matches are skipped to keep the operation idempotent.
+    The script authenticates using a User-Assigned Managed Identity (UAMI)
+    that must already have the CustomDetection.ReadWrite.All Graph permission.
+    The UAMI client ID is read from an Automation Variable set by the ARM
+    template, or can be passed as a parameter.
+
+    Existing rules whose displayName already matches are skipped to keep the
+    operation idempotent.
 
     Designed to run as an Azure Automation runbook before data-ingestion so
     that rules are already active when telemetry arrives.
+
+.PARAMETER ManagedIdentityClientId
+    Client ID of the User-Assigned Managed Identity. If omitted, the script
+    reads it from the Automation Variable 'DetectionRulesManagedIdentityClientId'.
 
 .PARAMETER RepoZipUrl
     URL of the repository zip archive. Defaults to the master branch.
@@ -25,6 +33,7 @@
     Path inside the extracted repo to the rules JSON file.
 #>
 param(
+    [string]$ManagedIdentityClientId,
     [string]$RepoZipUrl     = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
     [string]$RepoRootName   = "SentinelTrainingDemo-master",
     [string]$RulesRelativePath = "Training/Azure-Sentinel-Training-Lab/Artifacts/DetectionRules/rules.json"
@@ -32,9 +41,22 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-# ── Authenticate with Managed Identity ───────────────────────────────────────
+# ── Resolve UAMI client ID ──────────────────────────────────────────────────
+if (-not $ManagedIdentityClientId) {
+    try {
+        $raw = Get-AutomationVariable -Name 'DetectionRulesManagedIdentityClientId'
+        $ManagedIdentityClientId = $raw.Trim().Trim('"')
+    }
+    catch {
+        throw "ManagedIdentityClientId not provided and Automation Variable 'DetectionRulesManagedIdentityClientId' not found."
+    }
+}
+
+Write-Output "Using Managed Identity Client ID: $ManagedIdentityClientId"
+
+# ── Authenticate with User-Assigned Managed Identity ─────────────────────────
 Import-Module Az.Accounts -ErrorAction Stop
-Connect-AzAccount -Identity | Out-Null
+Connect-AzAccount -Identity -AccountId $ManagedIdentityClientId | Out-Null
 
 # Acquire a token for Microsoft Graph
 $graphToken = (Get-AzAccessToken -ResourceUrl "https://graph.microsoft.com").Token

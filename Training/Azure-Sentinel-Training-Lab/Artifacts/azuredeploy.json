@@ -21,6 +21,12 @@
             "metadata": {
                 "description": "UTC start time for the data-ingestion runbook (runs after detection rules)"
             }
+        },
+        "detectionRulesIdentityResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "Full resource ID of a pre-created User-Assigned Managed Identity with Microsoft Graph CustomDetection.ReadWrite.All permission (e.g. /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{name})"
+            }
         }
     },
     "variables": {
@@ -69,6 +75,9 @@
                 "parameters": {
                     "scheduleStartTime": {
                         "value": "[parameters('detectionRulesScheduleStartTime')]"
+                    },
+                    "userAssignedIdentityResourceId": {
+                        "value": "[parameters('detectionRulesIdentityResourceId')]"
                     }
                 }
             }
