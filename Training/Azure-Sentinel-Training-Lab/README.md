@@ -83,51 +83,23 @@ See the script header for parameters and usage.
 
 ## Getting started
 
-All the [modules](#Modules) that are part of this lab are listed below. Although in general they can be completed in any order, you must start with [Module 1](./Modules/Module-1-Setting-up-the-environment.md) as this deploys the lab environment itself.
+Start with the **Onboarding** exercise to set up your environment. Then work through Exercises 1–6 in order — each builds on the previous one.
 
-## Modules
+## Exercises
 
-[**Module 1 - Setting up the environment**](./Modules/Module-1-Setting-up-the-environment.md)
-- [The Microsoft Sentinel workspace](./Modules/Module-1-Setting-up-the-environment.md#exercise-1-the-azure-sentinel-workspace)
-- [Deploy the Microsoft Sentinel Training Lab Solution](./Modules/Module-1-Setting-up-the-environment.md#exercise-2-deploy-the-azure-sentinel-training-lab-solution)
-- [Configure Microsoft Sentinel Playbook](./Modules/Module-1-Setting-up-the-environment.md#exercise-3-configure-azure-sentinel-playbook)
- 
-[**Module 2 - Data Connectors**](./Modules/Module-2-Data-Connectors.md)
-- [Enable Azure Activity data connector](./Modules/Module-2-Data-Connectors.md#exercise-1-enable-azure-activity-data-connector)
-- [Enable Azure Defender data connector](./Modules/Module-2-Data-Connectors.md#exercise-2-enable-azure-defender-data-connector)
-- [Enable Threat Intelligence TAXII data connector](./Modules/Module-2-Data-Connectors.md#exercise-3-enable-threat-intelligence-taxii-data-connector)
+[**Onboarding — Setting up the environment**](./Exercises/Onboarding.md)
+- Create a Log Analytics workspace and add Microsoft Sentinel
+- Install Content Hub solutions and set up data connectors
+- Deploy the Training Lab solution and configure the playbook
 
-[**Module 3 - Analytics Rules**](./Modules/Module-3-Analytics-Rules.md)
-- [Analytics Rules overview](./Modules/Module-3-Analytics-Rules.md#exercise-1-analytics-rules-overview)
-- [Enable Microsoft incident creation rule](./Modules/Module-3-Analytics-Rules.md#exercise-2-enable-microsoft-incident-creation-rule)
-- [Review the Fusion rule (Advanced Multistage Attack Detection)](./Modules/Module-3-Analytics-Rules.md#exercise-3-review-fusion-rule-advanced-multistage-attack-detection)
-- [Create a custom analytics rule](./Modules/Module-3-Analytics-Rules.md#exercise-4-create-azure-sentinel-custom-analytics-rule)
-- [Review the resulting security incident](./Modules/Module-3-Analytics-Rules.md#exercise-5-review-resulting-security-incident)
+[**Exercise 1 — Threat Intel IOC Matching**](./Exercises/E1_threat_intel_ioc_matching.md)
 
-[**Module 4 - Incident Management**](./Modules/Module-4-Incident-Management.md)
-- [Review Microsoft Sentinel incident tools and capabilities](./Modules/Module-4-Incident-Management.md#exercise-1-review-azure-sentinel-incident-tools-and-capabilities)
-- [Handling the Incident "Sign-ins from IPs that attempt sign-ins to disabled accounts"](./Modules/Module-4-Incident-Management.md#exercise-2-handling-incident-sign-ins-from-ips-that-attempt-sign-ins-to-disabled-accounts)
-- [Handling the incident "Solorigate Network Beacon"](./Modules/Module-4-Incident-Management.md#exercise-3-Handling-solorigate-network-beacon-incident)
-- [Hunting for more evidence](./Modules/Module-4-Incident-Management.md#exercise-4-Hunting-for-more-evidence)
-- [Addding IOCs to Threat Intelligence](./Modules/Module-4-Incident-Management.md#exercise-5-Add-IOC-to-Threat-Intelligence)
-- [Incident handover](./Modules/Module-4-Incident-Management.md#exercise-6-Handover-incident)
- 
-[**Module 5 - Hunting**](./Modules/Module-5-Hunting.md)
-- [Hunt for a specific MITRE technique](./Modules/Module-5-Hunting.md#exercise-1-Hunting-on-a-specific-MITRE-technique)
-- [Bookmark hunting query results](./Modules/Module-5-Hunting.md#exercise-2-Bookmarking-hunting-query-results)
-- [Promote a bookmark to an incident](./Modules/Module-5-Hunting.md#exercise-3-Promote-a-bookmark-to-an-incident)
+[**Exercise 2 — Port Scan Threshold Tuning**](./Exercises/E2_port_scan_threshold_tuning.md)
 
-[**Module 6 - Watchlists**](./Modules/Module-6-Watchlists.md)
-- [Create a Watchlist](./Modules/Module-6-Watchlists.md#exercise-1-create-a-watchlist)
-- [Allow-list IP addresses in an analytics rule](./Modules/Module-6-Watchlists.md#exercise-2-whitelist-ip-addresses-in-the-analytics-rule)
+[**Exercise 3 — Okta MFA Manipulation**](./Exercises/E3_okta_mfa_manipulation.md)
 
-[**Module 7 - Threat Intelligence**](./Modules/Module-7-Threat-Intelligence.md)
-- [Threat Intelligence data connectors](./Modules/Module-7-Threat-Intelligence.md#exercise-1-threat-intelligence-data-connectors)
-- [Explore the Threat Intelligence menu](./Modules/Module-7-Threat-Intelligence.md#exercise-2-explore-the-threat-intelligence-menu)
-- [Analytics Rules based on Threat Intelligence data](./Modules/Module-7-Threat-Intelligence.md#exercise-3-analytics-rules-based-on-threat-intelligence-data)
-- [Threat Intelligence Workbook](./Modules/Module-7-Threat-Intelligence.md#exercise-5-threat-intelligence-workbook)
+[**Exercise 4 — Watchlist Integration**](./Exercises/E4_watchlist_integration.md)
 
-[**Module 8 - Microsoft Sentinel Content hub**](./Modules/Module-8-Sentinel-Solutions.md)
-- [Explore Microsoft Sentinel Content hub](./Modules/Module-8-Sentinel-Solutions.md#exercise-1-explore-azure-sentinel-content-hub)
-- [Deploy a new content solution](./Modules/Module-8-Sentinel-Solutions.md#exercise-2-deploy-a-new-solution)
-- [Review and enable deployed artifacts](./Modules/Module-8-Sentinel-Solutions.md#exercise-3-review-and-enable-deployed-artifacts)
+[**Exercise 5 — Data Lake Port Diversity**](./Exercises/E5_datalake_port_diversity.md)
+
+[**Exercise 6 — Device Isolation Response**](./Exercises/E6_device_isolation_response.md)
