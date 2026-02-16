@@ -46,11 +46,29 @@
     },
     "resources": [
         {
+            "condition": "[variables('useManagedIdentity')]",
             "type": "Microsoft.Automation/automationAccounts",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2023-11-01",
             "name": "[variables('automationAccountName')]",
             "location": "[resourceGroup().location]",
-            "identity": "[if(variables('useManagedIdentity'), createObject('type', 'UserAssigned', 'userAssignedIdentities', createObject(parameters('userAssignedIdentityResourceId'), createObject())), createObject('type', 'None'))]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[if(variables('useManagedIdentity'), parameters('userAssignedIdentityResourceId'), 'placeholder')]": {}
+                }
+            },
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "condition": "[variables('useSpn')]",
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiVersion": "2023-11-01",
+            "name": "[variables('automationAccountName')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "sku": {
                     "name": "Basic"
@@ -59,7 +77,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/runbooks",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/', variables('runbookName'))]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -76,7 +94,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/schedules",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/', variables('scheduleName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -90,7 +108,7 @@
         {
             "condition": "[variables('useManagedIdentity')]",
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/DetectionRulesManagedIdentityClientId')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -103,7 +121,7 @@
         {
             "condition": "[variables('useSpn')]",
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/DetectionRulesTenantId')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -116,7 +134,7 @@
         {
             "condition": "[variables('useSpn')]",
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/DetectionRulesClientId')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -129,7 +147,7 @@
         {
             "condition": "[variables('useSpn')]",
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/DetectionRulesClientSecret')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -141,7 +159,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2023-11-01",
             "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), variables('runbookName'), variables('scheduleName')))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName'), variables('runbookName'))]",
