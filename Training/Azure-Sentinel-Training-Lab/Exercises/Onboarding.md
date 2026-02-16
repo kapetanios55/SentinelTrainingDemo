@@ -137,6 +137,14 @@ Click the button below to deploy directly into your Azure subscription:
 
 4. Once the deployment completes, go back to Microsoft Sentinel and select your workspace. On the home page you should see ingested data and several recent incidents. If incidents don't appear immediately, wait a few minutes for them to be raised.
 
+> **⚠️ Playbook Permissions:** The deployment creates a Logic App playbook with a **System-Assigned Managed Identity**. For the playbook to run automatically on incidents, you must grant this Managed Identity the **Microsoft Sentinel Contributor** role on the resource group (or workspace). Without this, the playbook will fail to execute.
+>
+> To assign the role:
+> 1. Go to the **Resource Group** → **Access control (IAM)** → **Add role assignment**.
+> 2. Select **Microsoft Sentinel Contributor**.
+> 3. Under **Assign access to**, choose **Managed identity** → select the Logic App's managed identity.
+> 4. Click **Save**.
+
 
 
 ## Next steps
