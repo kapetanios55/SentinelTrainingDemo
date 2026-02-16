@@ -18,7 +18,7 @@
     "variables": {
         "automationAccountName": "[concat('sentineldetections', uniqueString(resourceGroup().id))]",
         "runbookName": "DeployDetectionRules",
-        "scheduleName": "[concat('DeployDetectionRulesOnce-', uniqueString(resourceGroup().id, deployment().name))]"
+        "scheduleName": "[concat('DeployDetectionRulesOnce-', uniqueString(resourceGroup().id, parameters('scheduleStartTime')))]"
     },
     "resources": [
         {
@@ -83,7 +83,7 @@
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
             "apiVersion": "2019-06-01",
-            "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), variables('runbookName'), variables('scheduleName'), deployment().name))]",
+            "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), variables('runbookName'), variables('scheduleName')))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName'), variables('runbookName'))]",
                 "[resourceId('Microsoft.Automation/automationAccounts/schedules', variables('automationAccountName'), variables('scheduleName'))]",
