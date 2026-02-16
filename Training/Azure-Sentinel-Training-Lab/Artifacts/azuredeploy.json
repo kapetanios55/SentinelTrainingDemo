@@ -24,8 +24,30 @@
         },
         "detectionRulesIdentityResourceId": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
-                "description": "Full resource ID of a pre-created User-Assigned Managed Identity with Microsoft Graph CustomDetection.ReadWrite.All permission (e.g. /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{name})"
+                "description": "Full resource ID of a pre-created User-Assigned Managed Identity with Microsoft Graph CustomDetection.ReadWrite.All permission. Required when using Managed Identity auth (leave SPN params empty)."
+            }
+        },
+        "detectionRulesSpnTenantId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Microsoft Entra tenant ID for service principal authentication. Provide together with SpnClientId and SpnClientSecret to use SPN auth instead of Managed Identity."
+            }
+        },
+        "detectionRulesSpnClientId": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Application (client) ID of the service principal with CustomDetection.ReadWrite.All permission."
+            }
+        },
+        "detectionRulesSpnClientSecret": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Client secret of the service principal."
             }
         }
     },
@@ -78,6 +100,15 @@
                     },
                     "userAssignedIdentityResourceId": {
                         "value": "[parameters('detectionRulesIdentityResourceId')]"
+                    },
+                    "spnTenantId": {
+                        "value": "[parameters('detectionRulesSpnTenantId')]"
+                    },
+                    "spnClientId": {
+                        "value": "[parameters('detectionRulesSpnClientId')]"
+                    },
+                    "spnClientSecret": {
+                        "value": "[parameters('detectionRulesSpnClientSecret')]"
                     }
                 }
             }

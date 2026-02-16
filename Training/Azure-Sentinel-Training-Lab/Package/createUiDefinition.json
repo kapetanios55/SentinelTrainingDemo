@@ -50,15 +50,73 @@
           "visible": true
         },
         {
-          "name": "detectionRulesIdentityResourceId",
-          "type": "Microsoft.Common.TextBox",
-          "label": "Detection Rules UAMI Resource ID (optional)",
-          "defaultValue": "",
-          "toolTip": "Full resource ID of the User-Assigned Managed Identity that has CustomDetection.ReadWrite.All (leave empty to skip detection rules).",
+          "name": "detectionRulesAuthMethod",
+          "type": "Microsoft.Common.DropDown",
+          "label": "Detection Rules Auth Method",
+          "defaultValue": "None (skip detection rules)",
+          "toolTip": "Choose how the Automation runbook authenticates to Microsoft Graph for deploying XDR custom detection rules.",
           "constraints": {
-            "required": false
+            "allowedValues": [
+              { "label": "None (skip detection rules)", "value": "none" },
+              { "label": "User-Assigned Managed Identity", "value": "uami" },
+              { "label": "Service Principal (App Registration)", "value": "spn" }
+            ],
+            "required": true
           },
           "visible": true
+        },
+        {
+          "name": "detectionRulesIdentityResourceId",
+          "type": "Microsoft.Common.TextBox",
+          "label": "UAMI Resource ID",
+          "defaultValue": "",
+          "toolTip": "Full resource ID of the User-Assigned Managed Identity that has CustomDetection.ReadWrite.All.",
+          "constraints": {
+            "required": "[equals(basics('detectionRulesAuthMethod'), 'uami')]"
+          },
+          "visible": "[equals(basics('detectionRulesAuthMethod'), 'uami')]"
+        },
+        {
+          "name": "detectionRulesSpnTenantId",
+          "type": "Microsoft.Common.TextBox",
+          "label": "SPN Tenant ID",
+          "defaultValue": "",
+          "toolTip": "Azure AD Tenant ID for the Service Principal.",
+          "constraints": {
+            "required": "[equals(basics('detectionRulesAuthMethod'), 'spn')]",
+            "regex": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$",
+            "validationMessage": "Must be a valid GUID."
+          },
+          "visible": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
+        },
+        {
+          "name": "detectionRulesSpnClientId",
+          "type": "Microsoft.Common.TextBox",
+          "label": "SPN Client (App) ID",
+          "defaultValue": "",
+          "toolTip": "Application (client) ID of the App Registration that has CustomDetection.ReadWrite.All.",
+          "constraints": {
+            "required": "[equals(basics('detectionRulesAuthMethod'), 'spn')]",
+            "regex": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$",
+            "validationMessage": "Must be a valid GUID."
+          },
+          "visible": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
+        },
+        {
+          "name": "detectionRulesSpnClientSecret",
+          "type": "Microsoft.Common.PasswordBox",
+          "label": {
+            "password": "SPN Client Secret"
+          },
+          "defaultValue": "",
+          "toolTip": "Client secret for the App Registration.",
+          "constraints": {
+            "required": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
+          },
+          "options": {
+            "hideConfirmation": true
+          },
+          "visible": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
         }
       ],
       "steps": [
@@ -221,6 +279,9 @@
         "location": "[location()]",
         "workspaceName": "[basics('workspace')]",
         "detectionRulesIdentityResourceId": "[basics('detectionRulesIdentityResourceId')]",
+        "detectionRulesSpnTenantId": "[basics('detectionRulesSpnTenantId')]",
+        "detectionRulesSpnClientId": "[basics('detectionRulesSpnClientId')]",
+        "detectionRulesSpnClientSecret": "[basics('detectionRulesSpnClientSecret')]",
         "workbook1-name": "[steps('workbooks').workbook1.workbook1-name]",
         "playbook1-PlaybookName": "[steps('playbooks').playbook1.playbook1-PlaybookName]"
       }

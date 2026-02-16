@@ -15,8 +15,10 @@
     The identity used must have the CustomDetection.ReadWrite.All application
     permission (admin-consented) on Microsoft Graph.
 
-    Authentication selection:
-      - If TenantId + ClientId + ClientSecret are provided, SPN auth is used.
+    Authentication selection (checked in order):
+      - If TenantId + ClientId + ClientSecret are provided (as parameters or
+        Automation Variables 'DetectionRulesTenantId', 'DetectionRulesClientId',
+        'DetectionRulesClientSecret'), SPN auth is used.
       - Otherwise, Managed Identity auth is used (requires ManagedIdentityClientId
         or the Automation Variable 'DetectionRulesManagedIdentityClientId').
 
@@ -60,6 +62,18 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+# ── Helper: read Automation Variable (returns $null outside Automation) ──────
+function Get-OptionalAutomationVariableValue {
+    param([string]$Name)
+    try { $v = Get-AutomationVariable -Name $Name; return $v.Trim().Trim('"') }
+    catch { return $null }
+}
+
+# ── Resolve SPN credentials from Automation Variables if not passed ──────────
+if (-not $TenantId)     { $TenantId     = Get-OptionalAutomationVariableValue -Name 'DetectionRulesTenantId' }
+if (-not $ClientId)     { $ClientId     = Get-OptionalAutomationVariableValue -Name 'DetectionRulesClientId' }
+if (-not $ClientSecret) { $ClientSecret = Get-OptionalAutomationVariableValue -Name 'DetectionRulesClientSecret' }
 
 # ── Authenticate ─────────────────────────────────────────────────────────────
 Import-Module Az.Accounts -ErrorAction Stop
