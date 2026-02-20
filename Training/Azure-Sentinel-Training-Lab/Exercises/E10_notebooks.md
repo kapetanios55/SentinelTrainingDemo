@@ -2,7 +2,7 @@
 
 In this exercise you will use **Jupyter notebooks** to perform an interactive security investigation against the Microsoft Sentinel data lake. Notebooks combine code, visualisations, and narrative in a single document — making them ideal for deep-dive threat hunting, repeatable analysis, and sharing findings with your SOC team.
 
-The lab includes a ready-made notebook (**PoCaaS_Notebook.ipynb**) that analyses Palo Alto firewall logs from the `CommonSecurityLog` table. You will open it in VS Code, connect to the Sentinel Spark engine, and run each analysis cell to investigate the PoCaaS attack scenario data.
+The lab includes a ready-made notebook (**Lab_Notebook.ipynb**) that analyses Palo Alto firewall logs from the `CommonSecurityLog` table. You will open it in VS Code, connect to the Sentinel Spark engine, and run each analysis cell to investigate the PoCaaS attack scenario data.
 
 ---
 
@@ -21,13 +21,25 @@ Before running notebooks you need:
 
 ## Step 1 — Open the Notebook
 
-1. In VS Code, open the file **Notebook/PoCaaS_Notebook.ipynb** from this training repo.
+1. In VS Code, open the file **Notebook/Lab_Notebook.ipynb** from this training repo.
 2. Click the **Microsoft Sentinel** shield icon in the left toolbar and sign in when prompted.
 3. Once signed in, the extension shows your data lake **tables** and **jobs** in the sidebar.
 
 ---
 
-## Step 2 — Select a Runtime Pool
+## Step 2 — Update the Workspace Name
+
+In cell 5 (the parameters cell), update the `workspace_name` variable to match your Sentinel workspace:
+
+```python
+workspace_name = "<YOUR_WORKSPACE_NAME>"
+```
+
+Replace `<YOUR_WORKSPACE_NAME>` with the name of your Sentinel workspace (e.g. the one you created during onboarding).
+
+---
+
+## Step 3 — Select a Runtime Pool
 
 When you run the first code cell, VS Code asks you to choose a runtime:
 
@@ -43,7 +55,7 @@ For this exercise, **Medium** is recommended.
 
 ---
 
-## Step 3 — Run the Analysis
+## Step 4 — Run the Analysis
 
 The notebook walks you through a complete Palo Alto firewall investigation in 12 steps. Run each cell in order — the markdown cells explain what each analysis does, and the code cells produce the results.
 
@@ -73,7 +85,7 @@ The notebook walks you through a complete Palo Alto firewall investigation in 12
 
 ---
 
-## Step 4 — Explore the Results
+## Step 5 — Explore the Results
 
 After running the notebook, review the visualisations:
 
@@ -84,7 +96,7 @@ After running the notebook, review the visualisations:
 
 ---
 
-## Step 5 — Clean Up (Optional)
+## Step 6 — Clean Up (Optional)
 
 The notebook saves results to `PaloAlto_Investigation_SPRK` in the data lake. If you want to remove this table after the exercise:
 
