@@ -153,6 +153,8 @@ Start with the **Onboarding** exercise to set up your workspace, install solutio
 
 [**Exercise 9 — Sentinel MCP Server Demo Prompts**](./Exercises/E9_MCP.md)
 
+[**Exercise 10 — Data Lake Notebooks**](./Exercises/E10_notebooks.md)
+
 ---
 
 ## Reference
