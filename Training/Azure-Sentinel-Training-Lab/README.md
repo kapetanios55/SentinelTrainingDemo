@@ -135,23 +135,23 @@ Start with the **Onboarding** exercise to set up your workspace, install solutio
 - Install Content Hub solutions and set up data connectors
 - Deploy the Training Lab solution
 
-[**Exercise 1 — Threat Intel IOC Matching**](./Exercises/E1_threat_intel_ioc_matching.md)
+[**Exercise 1 — Threat Intel IOC Matching**](./Exercises/E01_threat_intel_ioc_matching.md)
 
-[**Exercise 2 — Port Scan Threshold Tuning**](./Exercises/E2_port_scan_threshold_tuning.md)
+[**Exercise 2 — Port Scan Threshold Tuning**](./Exercises/E02_port_scan_threshold_tuning.md)
 
-[**Exercise 3 — Okta MFA Manipulation**](./Exercises/E3_okta_mfa_manipulation.md)
+[**Exercise 3 — Okta MFA Manipulation**](./Exercises/E03_okta_mfa_manipulation.md)
 
-[**Exercise 4 — Watchlist Integration**](./Exercises/E4_watchlist_integration.md)
+[**Exercise 4 — Watchlist Integration**](./Exercises/E04_watchlist_integration.md)
 
-[**Exercise 5 — Device Isolation Response**](./Exercises/E5_device_isolation_response.md)
+[**Exercise 5 — Device Isolation Response**](./Exercises/E05_device_isolation_response.md)
 
-[**Exercise 6 — Data Lake KQL Jobs**](./Exercises/E6_datalake_kql_jobs.md)
+[**Exercise 6 — Data Lake KQL Jobs**](./Exercises/E06_datalake_kql_jobs.md)
 
-[**Exercise 7 — Data Lake Port Diversity**](./Exercises/E7_datalake_port_diversity.md)
+[**Exercise 7 — Data Lake Port Diversity**](./Exercises/E07_datalake_port_diversity.md)
 
-[**Exercise 8 — Table Management: Tiers & Retention**](./Exercises/E8_table_management.md)
+[**Exercise 8 — Table Management: Tiers & Retention**](./Exercises/E08_table_management.md)
 
-[**Exercise 9 — Sentinel MCP Server Demo Prompts**](./Exercises/E9_MCP.md)
+[**Exercise 9 — Sentinel MCP Server Demo Prompts**](./Exercises/E09_MCP.md)
 
 [**Exercise 10 — Data Lake Notebooks**](./Exercises/E10_notebooks.md)
 
