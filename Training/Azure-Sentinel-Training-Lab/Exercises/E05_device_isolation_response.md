@@ -1,7 +1,7 @@
 # Exercise 5 — Cross-Platform Response Actions (Device Isolation) - Optional - Requires a VM onboarded to MDE
 
 **Rule:** `[E5] [CrowdStrike] Device Isolation Response`
-**File:** `detections/rules/exercise5_device_isolation.json`
+**Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1204.002 (User Execution: Malicious File)
 **Difficulty:** Advanced
 
@@ -130,7 +130,7 @@ If editing in the Defender portal instead of the Graph API:
 
 ### Step 1 — Verify the Current Rule
 
-The deployed rule E6 currently has **no join** and **no response action**. It detects CrowdStrike critical alerts but can't trigger isolation because it doesn't have the `DeviceId`.
+The deployed rule E5 currently has **no join** and **no response action**. It detects CrowdStrike critical alerts but can't trigger isolation because it doesn't have the `DeviceId`.
 
 Run the current query in Advanced Hunting:
 
@@ -201,9 +201,9 @@ Update the rule file to add the response action:
 ]
 ```
 
-Then redeploy:
+Then redeploy using the deployment script:
 ```
-python -m scripts.deploy_detections --rule exercise5_device_isolation.json
+.\Scripts\DeployDetectionRules.ps1
 ```
 
 > **Warning:** In a production environment, automatic device isolation is a high-impact action. Always test with a `selective` isolation type first, and scope to a test device group.
@@ -211,13 +211,13 @@ python -m scripts.deploy_detections --rule exercise5_device_isolation.json
 ### Step 4 — Enable and Test
 
 1. Enable the rule
-2. Ingest attack data: `python -m scripts.ingest --attack --connector crowdstrike`
+2. Ingest attack data using `.\Scripts\IngestCSV.ps1`
 3. Monitor **Triggered alerts** and **Triggered actions** in the rule details
 4. Verify the device isolation action was taken (check **Action Center** in Defender)
 
 ## Comparison with S2 (blockFile)
 
-| Aspect | S2 — blockFile | E6 — isolateDevice |
+| Aspect | S2 — blockFile | E5 — isolateDevice |
 |---|---|---|
 | **Action** | Block file hash org-wide | Isolate device from network |
 | **Required column** | `SHA256` | `DeviceId` |

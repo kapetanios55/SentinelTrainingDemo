@@ -155,7 +155,7 @@ Click the button below to deploy directly into your Azure subscription:
 
 Congratulations, you have completed the onboarding exercise! You can now continue to the next exercise:
 
-- **[Exercise 1 — Threat Intel IOC Matching](./E1_threat_intel_ioc_matching.md)**
+- **[Exercise 1 — Threat Intel IOC Matching](./E01_threat_intel_ioc_matching.md)**
 
 ### Learn more
 

@@ -1,7 +1,7 @@
 # Exercise 1 — Threat Intel IOC Matching Across Sources
 
 **Rule:** `[E1] [Threat Intel] IOC Match Across Sources`
-**File:** `detections/rules/exercise1_ti_ioc_match.json`
+**Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1566 (Phishing)
 **Difficulty:** Beginner
 
@@ -24,7 +24,7 @@ The Lab attack scenario uses specific IOCs that appear across multiple connector
 | IP Address | `192.0.2.100` | CrowdStrike |
 | SHA256 Hash | `e3b0c44298fc1c14...` | CrowdStrike |
 
-> **Reference:** Review the full list in [`threat-intelligence/indicators.json`](../threat-intelligence/indicators.json)
+> **Reference:** The IOC values are embedded directly in the rule's `dynamic` arrays. Review the deployed rule in `Artifacts/DetectionRules/rules.json`.
 
 ## Techniques Covered
 
@@ -80,7 +80,7 @@ Each branch of the union handles one data source:
 | Palo Alto | `CommonSecurityLog` | `SourceIP`, `DestinationIP` | — |
 | AWS | `AWSCloudTrail` | `SourceIpAddress` | — |
 | Okta | `OktaV2_CL` | `SrcIpAddr` | — |
-| MailGuard | `SEG_MailGuard_CL` | `SenderIP` | — |
+| MailGuard | `MailGuard365_Threats_CL` | `SenderIP` | — |
 | CrowdStrike | `CrowdStrikeDetections` | `Device.external_ip` | `Sha256` |
 
 ### Step 3 — Extend the Query (Challenge)
@@ -111,7 +111,7 @@ let ioc_keys = dynamic(["AKIAIOSFODNN7EXAMPLE"]);
 
 - `union` is the primary operator for cross-source correlation in Defender XDR
 - Each data source requires its own `project` mapping to normalise column names
-- IOC lists can be embedded as `dynamic` arrays or loaded from watchlists (see [Exercise 4](./E4_watchlist_integration.md))
+- IOC lists can be embedded as `dynamic` arrays or loaded from watchlists (see [Exercise 4](./E04_watchlist_integration.md))
 - The `ReportId` column must be unique per event — use `hash_sha256(strcat(...))` to generate deterministic IDs
 
 ## Microsoft Learn References

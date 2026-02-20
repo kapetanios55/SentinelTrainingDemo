@@ -1,7 +1,7 @@
 # Exercise 2 — Port Scan Detection & Threshold Tuning
 
 **Rule:** `[E2] [Palo Alto] Port Scan Detection`
-**File:** `detections/rules/exercise2_port_scan.json`
+**Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1046 (Network Service Discovery)
 **Difficulty:** Beginner
 

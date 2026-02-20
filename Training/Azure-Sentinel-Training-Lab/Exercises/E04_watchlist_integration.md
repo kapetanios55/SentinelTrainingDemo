@@ -1,7 +1,7 @@
 # Exercise 4 — Watchlist Integration
 
 **Rule:** `[E4] [AWS] Console Login Without MFA`
-**File:** `detections/rules/exercise4_aws_nrt_login.json`
+**Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1078.004 (Valid Accounts: Cloud Accounts)
 **Difficulty:** Intermediate
 

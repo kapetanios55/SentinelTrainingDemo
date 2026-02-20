@@ -1,7 +1,7 @@
 # Exercise 3 — Okta MFA Factor Manipulation
 
 **Rule:** `[E3] [Okta] MFA Factor Manipulation`
-**File:** `detections/rules/exercise3_okta_mfa.json`
+**Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1556.006 (Modify Authentication Process: Multi-Factor Authentication)
 **Difficulty:** Intermediate
 
@@ -68,7 +68,7 @@ Okta pre-populates geolocation fields that add critical context:
 
 > **Note:** This exercise requires **re-ingestion** of attack data. The original data load may not include MFA manipulation events. Run:
 > ```
-> python -m scripts.ingest --attack --connector okta
+> .\Scripts\IngestCSV.ps1
 > ```
 
 Verify the events exist:

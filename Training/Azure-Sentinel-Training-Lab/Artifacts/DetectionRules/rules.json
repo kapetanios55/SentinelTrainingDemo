@@ -265,8 +265,8 @@
 },
 {
     "displayName": "Lab [E1] [Threat Intel] IOC Match Across Sources",
-    "description": "EXERCISE: Cross-source threat intelligence correlation. This rule matches known IOC IP addresses and file hashes from the Lab attack scenario against all five data sources using a union query. Students should review the TI indicators in threat-intelligence/indicators.json and understand how IOC matching works across heterogeneous log formats.",
-    "isEnabled": true,
+    "description": "EXERCISE: Cross-source threat intelligence correlation. This rule matches known IOC IP addresses and file hashes from the Lab attack scenario against all five data sources using a union query. Students should review the IOC values embedded in the query and understand how IOC matching works across heterogeneous log formats.",
+    "isEnabled": false,
     "queryCondition": {
         "queryText": "let ioc_ips = dynamic([\"198.51.100.42\", \"203.0.113.77\", \"192.0.2.100\"]);\nlet ioc_hashes = dynamic([\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"]);\nunion\n    (CommonSecurityLog\n    | where TimeGenerated > ago(4h)\n    | where DeviceVendor == \"Palo Alto Networks\"\n    | where SourceIP in (ioc_ips) or DestinationIP in (ioc_ips)\n    | extend MatchedIOC = iff(DestinationIP in (ioc_ips), DestinationIP, SourceIP)\n    | project TimeGenerated, DataSource = \"PaloAlto\", MatchedIOC, IOCType = \"ip\", Activity, SourceUserName, SourceHostName),\n    (AWSCloudTrail\n    | where TimeGenerated > ago(4h)\n    | where SourceIpAddress in (ioc_ips)\n    | project TimeGenerated, DataSource = \"AWS\", MatchedIOC = SourceIpAddress, IOCType = \"ip\", Activity = EventName, SourceUserName = UserIdentityUserName, SourceHostName = \"\"),\n    (OktaV2_CL\n    | where TimeGenerated > ago(4h)\n    | where SrcIpAddr in (ioc_ips)\n    | project TimeGenerated, DataSource = \"Okta\", MatchedIOC = SrcIpAddr, IOCType = \"ip\", Activity = EventOriginalType, SourceUserName = ActorUsername, SourceHostName = \"\"),\n    (MailGuard365_Threats_CL\n    | where TimeGenerated > ago(4h)\n    | where SenderIP in (ioc_ips)\n    | project TimeGenerated, DataSource = \"MailGuard\", MatchedIOC = SenderIP, IOCType = \"ip\", Activity = \"Phishing Email\", SourceUserName = \"mirage@pkwork.onmicrosoft.com\", SourceHostName = \"\"),\n    (CrowdStrikeDetections\n    | where TimeGenerated > ago(4h)\n    | where Sha256 in (ioc_hashes) or tostring(Device.external_ip) in (ioc_ips)\n    | extend MatchedIOC = iff(Sha256 in (ioc_hashes), Sha256, tostring(Device.external_ip))\n    | extend IOCType = iff(Sha256 in (ioc_hashes), \"hash\", \"ip\")\n    | project TimeGenerated, DataSource = \"CrowdStrike\", MatchedIOC, IOCType, Activity = Name, SourceUserName = SourceAccountUpn, SourceHostName = tostring(Device.hostname))\n| extend\n    AccountUpn = SourceUserName,\n    DeviceName = SourceHostName,\n    RemoteIP = iff(IOCType == \"ip\", MatchedIOC, \"\"),\n    SHA256 = iff(IOCType == \"hash\", MatchedIOC, \"\"),\n    ReportId = tostring(hash_sha256(strcat(DataSource, MatchedIOC, tostring(TimeGenerated))))"
     },
@@ -378,6 +378,56 @@
             "mitreTechniques": ["T1078.004"],
             "recommendedActions": "Enforce MFA on the IAM user. Review recent API activity for the user. Check if the login is from an expected IP and region.",
             "impactedAssets": [
+                { "@odata.type": "#microsoft.graph.security.impactedUserAsset", "identifier": "accountUpn" }
+            ]
+        },
+        "organizationalScope": null,
+        "responseActions": []
+    }
+},
+{
+    "displayName": "Lab [E5] [CrowdStrike] Device Isolation Response",
+    "description": "EXERCISE: Detects critical CrowdStrike alerts and resolves the MDE DeviceId via a DeviceInfo join to enable automatic device isolation. Students should start with the base query (no join), add the DeviceInfo join, then configure the isolateDevice response action. Requires a VM onboarded to MDE.",
+    "isEnabled": false,
+    "queryCondition": {
+        "queryText": "CrowdStrikeDetections\n| where TimeGenerated > ago(4h)\n| where SeverityName == \"Critical\"\n| extend CSHostname = tostring(Device.hostname)\n| join kind=inner (\n    DeviceInfo\n    | where Timestamp > ago(14d)\n    | summarize arg_max(Timestamp, DeviceId) by DeviceName\n    | project DeviceName, DeviceId\n) on $left.CSHostname == $right.DeviceName\n| project\n    TimeGenerated,\n    Name,\n    Description,\n    SeverityName,\n    Tactic,\n    Technique,\n    TechniqueId,\n    SourceAccountUpn,\n    CSHostname,\n    DeviceId,\n    Filename,\n    Sha256,\n    Cmdline\n| extend\n    AccountUpn = SourceAccountUpn,\n    DeviceName = CSHostname,\n    FileName = Filename,\n    SHA256 = Sha256,\n    ProcessCommandLine = Cmdline,\n    ReportId = tostring(hash_sha256(strcat(tostring(TimeGenerated), Name, CSHostname)))"
+    },
+    "schedule": { "period": "1H" },
+    "detectionAction": {
+        "alertTemplate": {
+            "title": "Critical CrowdStrike detection on {{DeviceName}} — isolation ready [E5]",
+            "description": "A critical CrowdStrike detection was observed and the device was resolved to an MDE DeviceId for automated isolation. Exercise 5 demonstrates cross-platform response actions (T1204.002).",
+            "severity": "high",
+            "category": "Execution",
+            "mitreTechniques": ["T1204.002"],
+            "recommendedActions": "Verify the device is correctly identified. Check Action Center for the isolation status. Release the device after investigation.",
+            "impactedAssets": [
+                { "@odata.type": "#microsoft.graph.security.impactedDeviceAsset", "identifier": "deviceId" },
+                { "@odata.type": "#microsoft.graph.security.impactedUserAsset", "identifier": "accountUpn" }
+            ]
+        },
+        "organizationalScope": null,
+        "responseActions": []
+    }
+},
+{
+    "displayName": "Lab [E7] [Palo Alto] Data Lake Port Diversity Anomaly",
+    "description": "EXERCISE: Detects port scanning patterns from the pre-aggregated data lake table PaloAlto_ThreatSummary_KQL_CL. Compares data lake detection with the real-time approach in E2. Uses a 3-hour schedule aligned with data lake batch processing intervals. Requires Exercise 6 (KQL Jobs) to be completed first.",
+    "isEnabled": false,
+    "queryCondition": {
+        "queryText": "PaloAlto_ThreatSummary_KQL_CL\n| where TimeGenerated > ago(12h)\n| where DistinctPorts > 10\n| project\n    TimeGenerated,\n    SourceIP,\n    DestinationIP,\n    DistinctPorts,\n    TotalSessions,\n    TotalBytesSent,\n    TotalBytesReceived,\n    ThreatCategories,\n    TopActions,\n    FirstSeen,\n    LastSeen,\n    SourceUserName,\n    SourceHostName\n| extend\n    AccountUpn = SourceUserName,\n    DeviceName = SourceHostName,\n    RemoteIP = DestinationIP,\n    ReportId = tostring(hash_sha256(strcat(SourceIP, DestinationIP, tostring(DistinctPorts), tostring(TimeGenerated))))"
+    },
+    "schedule": { "period": "3H" },
+    "detectionAction": {
+        "alertTemplate": {
+            "title": "Port diversity anomaly — {{SourceIP}} scanning {{DistinctPorts}} ports [Data Lake]",
+            "description": "The data lake aggregated table detected a source IP communicating with an unusual number of destination ports, consistent with reconnaissance activity (T1046). This detection uses pre-aggregated data from the KQL job output.",
+            "severity": "medium",
+            "category": "Discovery",
+            "mitreTechniques": ["T1046"],
+            "recommendedActions": "Compare with real-time E2 alerts. Investigate the source host for compromise. Review the ThreatCategories for additional context.",
+            "impactedAssets": [
+                { "@odata.type": "#microsoft.graph.security.impactedDeviceAsset", "identifier": "deviceName" },
                 { "@odata.type": "#microsoft.graph.security.impactedUserAsset", "identifier": "accountUpn" }
             ]
         },

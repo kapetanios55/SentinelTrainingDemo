@@ -126,7 +126,7 @@ During deployment, provide the following three parameters (leave the UAMI field 
 
 ## Getting started
 
-Start with the **Onboarding** exercise to set up your workspace, install solutions, and deploy the lab. Then work through Exercises 1–6 in order — each builds on the previous one.
+Start with the **Onboarding** exercise to set up your workspace, install solutions, and deploy the lab. Then work through the exercises below. Exercises 1–4 are standalone and can be done in any order. Exercise 5 is optional (requires MDE). Exercises 6–8 should be done in sequence. Exercises 9–10 are independent demos.
 
 ## Exercises
 
