@@ -82,7 +82,10 @@ The Lab environment ingests data into the following tables. Understanding which 
 3. Select **Configuration** → **Tables**
 4. The Tables screen lists all tables in your workspace with their current tier and retention settings
 
-<!-- TODO: Add screenshot of the Tables screen -->
+<p align="center">
+<img src="../Images/OnboardingImage16.png?raw=true">
+</p>
+
 
 > **Switching workspaces:** If you have multiple Sentinel workspaces, select the workspace name at the top left corner of the screen to switch between them.
 
@@ -98,7 +101,9 @@ The Lab environment ingests data into the following tables. Understanding which 
    - **Analytics retention** — how long data stays in the hot tier
    - **Total retention** — total data lifespan including data lake
 
-<!-- TODO: Add screenshot of the table details side panel for CommonSecurityLog -->
+<p align="center">
+<img src="../Images/OnboardingImage17.png?raw=true">
+</p>
 
 Questions to consider:
 - What is the current analytics retention for `CommonSecurityLog`?
@@ -121,7 +126,10 @@ In this step, you will extend the analytics retention for a custom table.
 8. Review the warning messages — they explain the cost implications of your changes
 9. Select **Save**
 
-<!-- TODO: Add screenshot of the Manage table screen showing retention settings -->
+<p align="center">
+<img src="../Images/OnboardingImage18.png?raw=true">
+</p>
+
 
 > **What happens behind the scenes:** When you reduce analytics retention, data beyond the new retention window moves to the data lake tier. When you increase it, existing data in the data lake that falls within the new retention window becomes available in the analytics tier. Changes take effect immediately.
 
@@ -145,7 +153,10 @@ Moving a table to the data lake tier is useful for tables with high ingestion vo
 5. Review the warning message about features that will stop working
 6. Select **Save**
 
-<!-- TODO: Add screenshot of the tier change confirmation -->
+<p align="center">
+<img src="../Images/OnboardingImage19.png?raw=true">
+</p>
+
 
 ---
 
@@ -159,9 +170,10 @@ Now reverse the change to restore real-time capabilities:
 4. Set the **Analytics retention** and **Total retention** as desired
 5. Select **Save**
 
-<!-- TODO: Add screenshot showing the table back on Analytics tier -->
+<p align="center">
+<img src="../Images/OnboardingImage20.png?raw=true">
+</p>
 
-> **Note:** Not all tables can be switched between tiers. Some XDR and Microsoft Sentinel solution tables must remain in the analytics tier because Microsoft security services require the data for near-real-time analytics.
 
 ---
 
@@ -186,8 +198,6 @@ The tier a table lives in directly affects which detection rules can query it. R
 - The `CommonSecurityLog` table **must** stay in the analytics tier because detection rules like `Lab Stage 3.5 Internal Port Scan` and `Lab Stage 6 Large Data Exfiltration` query it in real time
 - The `PaloAlto_ThreatSummary_KQL_CL` table **must** stay in the analytics tier because the `[S8]` detection rule queries it
 - However, `OfficeActivity_CL` could potentially be moved to the data lake tier if no active detection rules reference it, and you could use a KQL job (Exercise 7) to promote relevant data when needed
-
----
 
 ---
 
