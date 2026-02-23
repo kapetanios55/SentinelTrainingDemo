@@ -19,10 +19,10 @@ The Lab attack scenario uses specific IOCs that appear across multiple connector
 
 | IOC Type | Value | Appears In |
 |---|---|---|
-| IP Address | `198.51.100.42` | Palo Alto, Okta, MailGuard |
+| IP Address | `198.51.100.42` | Palo Alto, AWS, Okta, MailGuard, CrowdStrike |
 | IP Address | `203.0.113.77` | AWS, Palo Alto |
-| IP Address | `192.0.2.100` | CrowdStrike |
-| SHA256 Hash | `e3b0c44298fc1c14...` | CrowdStrike |
+| IP Address | `192.0.2.100` | Palo Alto, CrowdStrike |
+| SHA256 Hash | `e3b0c44298fc1c14...` | CrowdStrike, MailGuard |
 
 > **Reference:** The IOC values are embedded directly in the rule's `dynamic` arrays. Review the deployed rule in `Artifacts/DetectionRules/rules.json`.
 
