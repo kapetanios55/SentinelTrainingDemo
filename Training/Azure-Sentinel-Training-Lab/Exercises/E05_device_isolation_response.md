@@ -1,4 +1,4 @@
-# Exercise 5 — Cross-Platform Response Actions (Device Isolation) - Optional - Requires a VM onboarded to MDE
+# (Optional)Exercise 5 — Cross-Platform Response Actions (Device Isolation) - Requires a VM onboarded to MDE
 
 **Rule:** `[E5] [CrowdStrike] Device Isolation Response`
 **Deployed in:** `Artifacts/DetectionRules/rules.json`
