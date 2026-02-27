@@ -1,4 +1,4 @@
-# Exercise 6 — Data Lake KQL Jobs
+# Exercise 9 — Data Lake KQL Jobs
 
 **Topic:** Create and schedule KQL jobs in the Microsoft Sentinel data lake  
 **Difficulty:** Intermediate  
@@ -219,7 +219,7 @@ On the **Schedule the query job** page:
 
 After the job runs (wait for the first scheduled execution or create a one-time job to test immediately):
 
-1. Navigate to **Microsoft Defender XDR** → **Hunting** → **Advanced Hunting**
+1. Navigate to **Microsoft Defender portal** → **Hunting** → **Advanced Hunting**
 2. Run the following query to verify data was promoted:
 
 ```kusto

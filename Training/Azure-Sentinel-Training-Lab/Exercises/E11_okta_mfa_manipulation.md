@@ -1,6 +1,6 @@
-# Exercise 3 — Okta MFA Factor Manipulation
+# Exercise 11 — Okta MFA Factor Manipulation
 
-**Rule:** `[E3] [Okta] MFA Factor Manipulation`
+**Rule:** `[E3] [Okta] MFA Factor Manipulation` _(the `[E3]` prefix is the deployed rule tag)_
 **Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1556.006 (Modify Authentication Process: Multi-Factor Authentication)
 **Difficulty:** Intermediate

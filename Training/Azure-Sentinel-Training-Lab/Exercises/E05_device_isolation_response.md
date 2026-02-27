@@ -1,6 +1,6 @@
 # (Optional) Exercise 5 — Cross-Platform Response Actions (Device Isolation) - Requires a VM onboarded to MDE
 
-**Rule:** `[E5] [CrowdStrike] Device Isolation Response`
+**Rule:** `[E5] [CrowdStrike] Device Isolation Response` _(the `[E5]` prefix is the deployed rule tag)_
 **Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1204.002 (User Execution: Malicious File)
 **Difficulty:** Advanced

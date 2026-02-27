@@ -1,6 +1,6 @@
-# Exercise 4 — Watchlist Integration
+# Exercise 12 — Watchlist Integration
 
-**Rule:** `[E4] [AWS] Console Login Without MFA`
+**Rule:** `[E4] [AWS] Console Login Without MFA` _(the `[E4]` prefix is the deployed rule tag)_
 **Deployed in:** `Artifacts/DetectionRules/rules.json`
 **MITRE ATT&CK:** T1078.004 (Valid Accounts: Cloud Accounts)
 **Difficulty:** Intermediate

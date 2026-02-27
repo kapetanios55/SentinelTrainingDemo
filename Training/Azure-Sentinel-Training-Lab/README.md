@@ -126,7 +126,7 @@ During deployment, provide the following three parameters (leave the UAMI field 
 
 ## Getting started
 
-Start with the **Onboarding** exercise to set up your workspace, install solutions, and deploy the lab. Then work through the exercises below. Exercises 1–4 are standalone and can be done in any order. Exercise 5 is optional (requires MDE). Exercises 6–8 should be done in sequence. Exercises 9–10 are independent demos.
+Start with the **Onboarding** exercise to set up your workspace, install solutions, and deploy the lab. Then work through the exercises in order. Exercises 1–4 are introductory and can be done in any order. Exercise 5 is optional (requires MDE). Exercises 6–7 cover cost and table management. Exercises 8–10 cover detection engineering and data lake topics (do 9 before 10). Exercises 11–12 are detection-focused. Exercises 13–14 are independent demos.
 
 ## Exercises
 
@@ -135,25 +135,56 @@ Start with the **Onboarding** exercise to set up your workspace, install solutio
 - Install Content Hub solutions and set up data connectors
 - Deploy the Training Lab solution
 
-[**Exercise 1 — Threat Intel IOC Matching**](./Exercises/E01_threat_intel_ioc_matching.md)
+[**Exercise 1 — Exploration: Hunting Across Your Data**](./Exercises/E01_exploration.md)
+- Discover tables, explore telemetry from CrowdStrike, Palo Alto, Okta, and AWS
+- Create a custom detection rule for multi-tactic compromise
 
-[**Exercise 2 — Port Scan Threshold Tuning**](./Exercises/E02_port_scan_threshold_tuning.md)
+[**Exercise 2 — Threat Intelligence: Microsoft Defender Threat Intelligence**](./Exercises/E02_threat_intelligence_mdti.md)
+- Enable the MDTI data connector and query the `ThreatIntelIndicators` table
+- Match threat intelligence indicators against your environment's logs
 
-[**Exercise 3 — Okta MFA Manipulation**](./Exercises/E03_okta_mfa_manipulation.md)
+[**Exercise 3 — MITRE ATT&CK Coverage**](./Exercises/E03_mitre_attack_coverage.md)
+- View the MITRE ATT&CK coverage matrix for your deployed detection rules
+- Identify coverage gaps and trace the lab's attack chain
 
-[**Exercise 4 — Watchlist Integration**](./Exercises/E04_watchlist_integration.md)
+[**Exercise 4 — Automation Rules**](./Exercises/E04_automation_rules.md)
+- Create automation rules to tag incidents and escalate severity
+- Understand rule ordering and condition logic
 
-[**Exercise 5 — Device Isolation Response**](./Exercises/E05_device_isolation_response.md)
+[**Exercise 5 — Cross-Platform Response Actions (Device Isolation)**](./Exercises/E05_device_isolation_response.md)
+- (Optional) Isolate a device via MDE response actions triggered by CrowdStrike alerts
 
-[**Exercise 6 — Data Lake KQL Jobs**](./Exercises/E06_datalake_kql_jobs.md)
+[**Exercise 6 — Cost Management & Ingestion Analysis**](./Exercises/E06_cost_management.md)
+- Query the Usage table to analyse ingestion volume and cost drivers
+- Explore cost optimisation strategies and the Workspace Usage Report
 
-[**Exercise 7 — Data Lake Port Diversity**](./Exercises/E07_datalake_port_diversity.md)
+[**Exercise 7 — Table Management: Tiers & Retention**](./Exercises/E07_table_management.md)
+- Configure table tiers (Analytics vs Data Lake) and retention periods
+- Understand the cost and capability trade-offs
 
-[**Exercise 8 — Table Management: Tiers & Retention**](./Exercises/E08_table_management.md)
+[**Exercise 8 — Port Scan Detection & Threshold Tuning**](./Exercises/E08_port_scan_threshold_tuning.md)
+- Tune a detection rule's threshold and time window
+- Explore KQL aggregation patterns for network reconnaissance
 
-[**Exercise 9 — Sentinel MCP Server Demo Prompts**](./Exercises/E09_MCP.md)
+[**Exercise 9 — Data Lake KQL Jobs**](./Exercises/E09_datalake_kql_jobs.md)
+- Create and schedule KQL jobs to aggregate data lake telemetry
+- Promote summarised data for detection rules
 
-[**Exercise 10 — Data Lake Notebooks**](./Exercises/E10_notebooks.md)
+[**Exercise 10 — Data Lake vs Real-Time Detection**](./Exercises/E10_datalake_port_diversity.md)
+- Compare real-time and data lake detection approaches
+- Build a detection against pre-aggregated data
+
+[**Exercise 11 — Okta MFA Factor Manipulation**](./Exercises/E11_okta_mfa_manipulation.md)
+- Detect MFA factor deactivation events in Okta identity logs
+
+[**Exercise 12 — Watchlist Integration**](./Exercises/E12_watchlist_integration.md)
+- Create a watchlist and enrich detection rules with `_GetWatchlist()`
+
+[**Exercise 13 — Sentinel MCP Server Demo Prompts**](./Exercises/E13_MCP.md)
+- 10 AI assistant prompts demonstrating Sentinel MCP Server capabilities
+
+[**Exercise 14 — Data Lake Notebooks**](./Exercises/E14_notebooks.md)
+- Interactive Jupyter notebook investigation using PySpark
 
 ---
 
