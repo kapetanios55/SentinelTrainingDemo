@@ -39,7 +39,9 @@ The lab solution deploys **17 detection rules** covering a multi-stage attack th
 1. Open the **Microsoft Defender portal** (https://security.microsoft.com)
 2. Navigate to **Microsoft Sentinel** → **Threat management** → **MITRE ATT&CK (Preview)**
 
-<!-- IMAGE: Screenshot of the MITRE ATT&CK page showing the full matrix with colour-coded coverage cells -->
+<p align="center">
+<img src="../Images/OnboardingImage26.png?raw=true">
+</p>
 
 You will see the ATT&CK matrix with **colour-coded cells**:
 
@@ -58,7 +60,9 @@ By default, the matrix shows all coverage sources (analytics rules, hunting quer
 2. Under **Simulated**, deselect all options
 3. Under **Active**, ensure **Analytics rules** is selected
 
-<!-- IMAGE: Screenshot of the MITRE ATT&CK filter panel with "Analytics rules" selected under Active -->
+<p align="center">
+<img src="../Images/OnboardingImage27.png?raw=true">
+</p>
 
 The matrix now reflects only your scheduled detection rules. You should see coverage across multiple tactics from the lab's deployed rules.
 
@@ -72,7 +76,9 @@ A side panel opens showing:
 - List of **analytics rules** mapped to it — you should see rules like `Lab Stage 3.5 Internal Port Scan Detected (Palo Alto)` and `Lab [E2] [Palo Alto] Port Scan Detection`
 - Coverage from **hunting queries** and **threat intelligence** (if applicable)
 
-<!-- IMAGE: Screenshot of the technique side panel showing the list of analytics rules mapped to T1046 -->
+<p align="center">
+<img src="../Images/OnboardingImage28.png?raw=true">
+</p>
 
 > **Observation:** Notice that some techniques — like **T1046** — have _both_ a stage rule (always enabled) and an exercise rule (disabled by default). The stage rules represent the SOC baseline; the exercise rules are for students to practise.
 

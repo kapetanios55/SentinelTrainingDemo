@@ -34,7 +34,9 @@ search *
 | sort by EventCount desc
 ```
 
-<!-- IMAGE: Screenshot of the Advanced Hunting query editor showing the table summary results -->
+<p align="center">
+<img src="../Images/OnboardingImage21.png?raw=true">
+</p>
 
 This gives you an overview of all tables with data. You should see tables like `CommonSecurityLog`, `AWSCloudTrail`, `CrowdStrikeDetections`, `CrowdStrikeAlerts`, `OktaV2_CL`, `SecurityEvent`, and more.
 
@@ -207,7 +209,9 @@ Run this query in Advanced Hunting to verify it returns results.
 
 1. After running the query, select **Create detection rule**
 
-<!-- IMAGE: Screenshot of the "Create detection rule" button in the Advanced Hunting query results toolbar -->
+<p align="center">
+<img src="../Images/OnboardingImage22.png?raw=true">
+</p>
 
 2. Fill in the rule details:
 
@@ -229,7 +233,9 @@ Run this query in Advanced Hunting to verify it returns results.
 
 6. Select **Create** to save the rule
 
-<!-- IMAGE: Screenshot of the completed "Create detection rule" wizard showing the schedule configuration -->
+<p align="center">
+<img src="../Images/OnboardingImage32.png?raw=true">
+</p>
 
 #### Step 9 — Verify the Rule
 

@@ -37,7 +37,9 @@ Look for incidents created by the lab's detection rules. You should see incident
 - `Lab Stage 6 - Large data exfiltration to external IP`
 - `Lab [S4] [Okta] Account Takeover Chain`
 
-<!-- IMAGE: Screenshot of the Incidents page showing lab-generated incidents with different severities -->
+<p align="center">
+<img src="../Images/OnboardingImage29.png?raw=true">
+</p>
 
 For this exercise, we will create automation rules targeting two scenarios:
 
@@ -49,7 +51,9 @@ For this exercise, we will create automation rules targeting two scenarios:
 1. Navigate to **Microsoft Sentinel** → **Configuration** → **Automation**
 2. Click **+ Create** → **Automation rule**
 
-<!-- IMAGE: Screenshot of the Automation page with the Create button expanded showing "Automation rule" option -->
+<p align="center">
+<img src="../Images/OnboardingImage30.png?raw=true">
+</p>
 
 3. Fill in the rule details:
 
@@ -149,7 +153,9 @@ If no new incidents have been created since you set up the rules, you can trigge
 
 Then check the incident — it should have the tags `reconnaissance` and `network` applied automatically.
 
-<!-- IMAGE: Screenshot of an incident detail page showing the automation-applied tags (reconnaissance, network) in the Tags section -->
+<p align="center">
+<img src="../Images/OnboardingImage31.png?raw=true">
+</p>
 
 #### Step 6 — Explore Additional Automation Options
 
