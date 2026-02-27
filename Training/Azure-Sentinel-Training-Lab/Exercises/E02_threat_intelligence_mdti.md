@@ -39,7 +39,9 @@ When you enable the MDTI data connector, indicators are automatically ingested i
 3. Search for **Microsoft Defender Threat Intelligence**
 4. Select the connector and click **Open connector page**
 
-<!-- IMAGE: Screenshot of the Data connectors page with the MDTI connector selected -->
+<p align="center">
+<img src="../Images/OnboardingImage24.png?raw=true">
+</p>
 
 5. On the connector page, review the **Prerequisites** section:
    - Your workspace must have Microsoft Sentinel enabled
@@ -47,7 +49,9 @@ When you enable the MDTI data connector, indicators are automatically ingested i
 
 6. Under **Configuration**, select **Connect** to enable the connector
 
-<!-- IMAGE: Screenshot of the MDTI connector page showing the Connect button and configuration options -->
+<p align="center">
+<img src="../Images/OnboardingImage23.png?raw=true">
+</p>
 
 7. Once connected, the **Status** changes to **Connected**. Indicators will begin ingesting within a few minutes.
 
@@ -185,7 +189,9 @@ Microsoft Sentinel provides a dedicated UI for managing threat intelligence:
 3. Use the filters to search by indicator type, source, or confidence level
 4. Select an indicator to view its full details, including associated threat actors and campaigns
 
-<!-- IMAGE: Screenshot of the Threat intelligence blade showing ingested MDTI indicators with filters applied -->
+<p align="center">
+<img src="../Images/OnboardingImage25.png?raw=true">
+</p>
 
 > **Tip:** You can also manually add indicators from this blade, upload STIX files, or connect additional TI feeds (e.g., TAXII servers, open-source feeds).
 
