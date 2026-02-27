@@ -107,7 +107,7 @@ The Defender portal includes a dedicated **Cost management** page with built-in 
 2. Review the **Usage reports** section — it shows **Data lake ingestion volume** and **Compute hours consumed** over the current month
 3. Click **Data lake ingestion** to open the full **Usage reports** dashboard
 
-<img src="../Images/OnboardingImage32.png" alt="Cost management overview in the Defender portal showing ingestion volume and compute hours" width="800">
+<img src="../Images/OnboardingImage33.png" alt="Cost management overview in the Defender portal showing ingestion volume and compute hours" width="800">
 
 The **Usage reports → Ingestion** tab provides:
 
@@ -116,7 +116,7 @@ The **Usage reports → Ingestion** tab provides:
 - A detailed table listing each table name and its total GB ingested
 - Filters by **table name**, **region**, and **time range**
 
-<img src="../Images/OnboardingImage33.png" alt="Usage reports Ingestion tab showing top 10 tables by volume with trend chart" width="800">
+<img src="../Images/OnboardingImage32.png" alt="Usage reports Ingestion tab showing top 10 tables by volume with trend chart" width="800">
 
 > **Tip:** Use the **Lake storage** and **Advanced analytics** tabs to review data lake storage costs and compute usage separately.
 
