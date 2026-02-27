@@ -1,4 +1,4 @@
-# Exercise 8 — Port Scan Detection & Threshold Tuning
+# Exercise 6 — Port Scan Detection & Threshold Tuning
 
 **Rule:** `[E2] [Palo Alto] Port Scan Detection` _(the `[E2]` prefix is the deployed rule tag)_
 **Deployed in:** `Artifacts/DetectionRules/rules.json`

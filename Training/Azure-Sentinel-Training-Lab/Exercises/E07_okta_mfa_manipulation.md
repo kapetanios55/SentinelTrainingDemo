@@ -1,4 +1,4 @@
-# Exercise 11 — Okta MFA Factor Manipulation
+# Exercise 7 — Okta MFA Factor Manipulation
 
 **Rule:** `[E3] [Okta] MFA Factor Manipulation` _(the `[E3]` prefix is the deployed rule tag)_
 **Deployed in:** `Artifacts/DetectionRules/rules.json`

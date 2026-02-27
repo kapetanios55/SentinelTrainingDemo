@@ -1,4 +1,4 @@
-# Exercise 14 — Data Lake Notebooks
+# Exercise 13 — Data Lake Notebooks
 
 In this exercise you will use **Jupyter notebooks** to perform an interactive security investigation against the Microsoft Sentinel data lake. Notebooks combine code, visualisations, and narrative in a single document — making them ideal for deep-dive threat hunting, repeatable analysis, and sharing findings with your SOC team.
 

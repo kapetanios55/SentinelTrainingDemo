@@ -1,4 +1,4 @@
-# Exercise 6 — Cost Management & Ingestion Analysis
+# Exercise 9 — Cost Management & Ingestion Analysis
 
 **Topic:** Monitor Sentinel costs using Usage tables and the ingestion dashboard
 **Difficulty:** Intermediate
@@ -149,7 +149,7 @@ Based on your analysis, consider these optimisation strategies:
 | **Use commitment tiers** | If you ingest 100+ GB/day consistently, switch from pay-as-you-go to a commitment tier | Up to 50% discount |
 | **Archive to long-term storage** | Data beyond interactive retention moves to archive tier at ~$0.02/GB/month | 90%+ savings on old data |
 
-> **Tip:** For hands-on practice with table tiers (Analytics, Basic, Data Lake) and retention settings, see Exercise 7 (Table Management).
+> **Tip:** For hands-on practice with table tiers (Analytics, Basic, Data Lake) and retention settings, see Exercise 10 (Table Management).
 
 #### Step 6 — Set Up an Ingestion Alert (Optional)
 

@@ -154,37 +154,45 @@ Start with the **Onboarding** exercise to set up your workspace, install solutio
 [**Exercise 5 — Cross-Platform Response Actions (Device Isolation)**](./Exercises/E05_device_isolation_response.md)
 - (Optional) Isolate a device via MDE response actions triggered by CrowdStrike alerts
 
-[**Exercise 6 — Cost Management & Ingestion Analysis**](./Exercises/E06_cost_management.md)
-- Query the Usage table to analyse ingestion volume and cost drivers
-- Explore cost optimisation strategies and the Workspace Usage Report
+**--- SIEM Detection ---**
 
-[**Exercise 7 — Table Management: Tiers & Retention**](./Exercises/E07_table_management.md)
-- Configure table tiers (Analytics vs Data Lake) and retention periods
-- Understand the cost and capability trade-offs
-
-[**Exercise 8 — Port Scan Detection & Threshold Tuning**](./Exercises/E08_port_scan_threshold_tuning.md)
+[**Exercise 6 — Port Scan Detection & Threshold Tuning**](./Exercises/E06_port_scan_threshold_tuning.md)
 - Tune a detection rule's threshold and time window
 - Explore KQL aggregation patterns for network reconnaissance
 
-[**Exercise 9 — Data Lake KQL Jobs**](./Exercises/E09_datalake_kql_jobs.md)
+[**Exercise 7 — Okta MFA Factor Manipulation**](./Exercises/E07_okta_mfa_manipulation.md)
+- Detect MFA factor deactivation events in Okta identity logs
+
+[**Exercise 8 — Watchlist Integration**](./Exercises/E08_watchlist_integration.md)
+- Create a watchlist and enrich detection rules with `_GetWatchlist()`
+
+**--- Operations ---**
+
+[**Exercise 9 — Cost Management & Ingestion Analysis**](./Exercises/E09_cost_management.md)
+- Query the Usage table to analyse ingestion volume and cost drivers
+- Explore cost optimisation strategies and the Workspace Usage Report
+
+[**Exercise 10 — Table Management: Tiers & Retention**](./Exercises/E10_table_management.md)
+- Configure table tiers (Analytics vs Data Lake) and retention periods
+- Understand the cost and capability trade-offs
+
+**--- Data Lake ---**
+
+[**Exercise 11 — Data Lake KQL Jobs**](./Exercises/E11_datalake_kql_jobs.md)
 - Create and schedule KQL jobs to aggregate data lake telemetry
 - Promote summarised data for detection rules
 
-[**Exercise 10 — Data Lake vs Real-Time Detection**](./Exercises/E10_datalake_port_diversity.md)
+[**Exercise 12 — Data Lake vs Real-Time Detection**](./Exercises/E12_datalake_port_diversity.md)
 - Compare real-time and data lake detection approaches
 - Build a detection against pre-aggregated data
 
-[**Exercise 11 — Okta MFA Factor Manipulation**](./Exercises/E11_okta_mfa_manipulation.md)
-- Detect MFA factor deactivation events in Okta identity logs
-
-[**Exercise 12 — Watchlist Integration**](./Exercises/E12_watchlist_integration.md)
-- Create a watchlist and enrich detection rules with `_GetWatchlist()`
-
-[**Exercise 13 — Sentinel MCP Server Demo Prompts**](./Exercises/E13_MCP.md)
-- 10 AI assistant prompts demonstrating Sentinel MCP Server capabilities
-
-[**Exercise 14 — Data Lake Notebooks**](./Exercises/E14_notebooks.md)
+[**Exercise 13 — Data Lake Notebooks**](./Exercises/E13_notebooks.md)
 - Interactive Jupyter notebook investigation using PySpark
+
+**--- Tools ---**
+
+[**Exercise 14 — Sentinel MCP Server Demo Prompts**](./Exercises/E14_MCP.md)
+- 10 AI assistant prompts demonstrating Sentinel MCP Server capabilities
 
 ---
 

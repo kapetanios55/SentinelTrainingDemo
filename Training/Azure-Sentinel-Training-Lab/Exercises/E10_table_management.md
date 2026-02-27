@@ -1,4 +1,4 @@
-# Exercise 7 — Table Management: Tiers & Retention
+# Exercise 10 — Table Management: Tiers & Retention
 
 **Topic:** Configure table tiers, retention settings, and understand cost implications  
 **Difficulty:** Beginner  
@@ -67,7 +67,7 @@ The Lab environment ingests data into the following tables. Understanding which 
 | `OktaV2_CL` | Okta identity events | Analytics |
 | `MailGuard365_Threats_CL` | MailGuard email threat data | Analytics |
 | `OfficeActivity_CL` | Office 365 activity | Analytics |
-| `PaloAlto_ThreatSummary_KQL_CL` | KQL job output (Exercise 9) | Analytics |
+| `PaloAlto_ThreatSummary_KQL_CL` | KQL job output (Exercise 11) | Analytics |
 
 > **Key insight:** Not all tables need to stay in the analytics tier. For example, if `OfficeActivity_CL` is primarily used for compliance auditing rather than real-time detections, moving it to the data lake tier could reduce costs significantly.
 
@@ -186,7 +186,7 @@ The tier a table lives in directly affects which detection rules can query it. R
 | Custom detection rules | Yes | No |
 | Analytics rules | Yes | No |
 | Advanced Hunting | Yes | No |
-| KQL jobs (Exercise 9) | Yes | Yes |
+| KQL jobs (Exercise 11) | Yes | Yes |
 | Search jobs | Yes | Yes |
 | Summary rules | Yes | Yes |
 | Notebooks | Yes | Yes |
@@ -197,7 +197,7 @@ The tier a table lives in directly affects which detection rules can query it. R
 
 - The `CommonSecurityLog` table **must** stay in the analytics tier because detection rules like `Lab Stage 3.5 Internal Port Scan` and `Lab Stage 6 Large Data Exfiltration` query it in real time
 - The `PaloAlto_ThreatSummary_KQL_CL` table **must** stay in the analytics tier because the `[S8]` detection rule queries it
-- However, `OfficeActivity_CL` could potentially be moved to the data lake tier if no active detection rules reference it, and you could use a KQL job (Exercise 9) to promote relevant data when needed
+- However, `OfficeActivity_CL` could potentially be moved to the data lake tier if no active detection rules reference it, and you could use a KQL job (Exercise 11) to promote relevant data when needed
 
 ---
 
