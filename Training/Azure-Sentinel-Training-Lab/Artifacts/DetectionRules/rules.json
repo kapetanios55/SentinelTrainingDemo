@@ -96,7 +96,7 @@
     }
  },
  {
-    "displayName": "Lab [S4] [Okta] Account Takeover Chain",
+    "displayName": "Lab Stage 4 -Account Takeover Chain",
     "description": "Detects a suspicious Okta login from a foreign country followed by privilege escalation within 15 minutes. To add markUserAsCompromised response action: join IdentityInfo on AccountUPN to resolve AccountObjectId (requires Defender for Identity).",
     "isEnabled": true,
     "queryCondition": {
