@@ -14,7 +14,7 @@ Learn how to create a **KQL job** that queries data in the Microsoft Sentinel da
 
 ### What are KQL Jobs?
 
-KQL jobs are one-time or scheduled queries that run against data stored in the **data lake tier** (cold storage). They are designed for:
+KQL jobs are one-time or scheduled queries that run against data stored in the **data lake tier**. They are designed for:
 
 - **Long-running investigations** — query months or years of historical data
 - **Data aggregation** — compress high-volume raw logs into meaningful summaries

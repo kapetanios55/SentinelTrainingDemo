@@ -30,7 +30,7 @@ Within the analytics tier, there are two retention concepts:
 | Setting | Range | Description |
 |---|---|---|
 | **Analytics retention** | 30 days – 2 years | How long data stays in the "hot" analytics tier for real-time querying |
-| **Total retention** | Up to 12 years | Total data lifespan including analytics + data lake. Data beyond analytics retention is stored in the data lake at lower cost |
+| **Total retention** | Up to 12 years | Total data lifespan including analytics + data lake.|
 
 > **Free storage:** Microsoft Sentinel solution tables (like `CommonSecurityLog`, `SecurityEvent`) get **90 days** of analytics retention for free. XDR tables get **30 days** included in the XDR license.
 
@@ -187,11 +187,9 @@ The tier a table lives in directly affects which detection rules can query it. R
 | Analytics rules | Yes | No |
 | Advanced Hunting | Yes | No |
 | KQL jobs (Exercise 11) | Yes | Yes |
-| Search jobs | Yes | Yes |
 | Summary rules | Yes | Yes |
 | Notebooks | Yes | Yes |
 | Workbooks | Yes | No |
-| Alerting | Yes | No |
 
 **Practical example from this Lab:**
 
@@ -206,9 +204,8 @@ The tier a table lives in directly affects which detection rules can query it. R
 - The **Tables** screen in the Defender portal gives you a centralised view of all tables and their settings
 - **Analytics tier** = hot storage with full real-time capabilities; **Data lake tier** = cold storage at lower cost
 - **Analytics retention** controls how long data stays hot (30 days – 2 years); **Total retention** extends data lifespan in the data lake (up to 12 years)
-- Moving a table to the data lake tier **disables** real-time detection rules, hunting, and alerting for that table
-- Not all tables can change tiers — some XDR and Sentinel solution tables must remain in the analytics tier
 - Always review active detection rules before changing a table's tier to avoid breaking detections
+- A copy of the data in the Analytics tier is **automatically available in the data lake tier at no extra cost**, ensuring a unified copy of security data for both tiers.
 
 ## Microsoft Learn References
 
