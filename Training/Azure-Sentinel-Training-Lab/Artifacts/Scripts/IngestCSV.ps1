@@ -194,7 +194,17 @@ function Invoke-ArmRest {
 
     if (Assert-AzCli) {
         if ($Method -eq "GET") {
-            return az rest --method get --uri $Uri | ConvertFrom-Json
+            $prevEA = $ErrorActionPreference
+            $ErrorActionPreference = "Continue"
+            $output = az rest --method get --uri $Uri 2>&1
+            $exitCode = $LASTEXITCODE
+            $ErrorActionPreference = $prevEA
+            if ($exitCode -ne 0) {
+                $errorOutput = ($output | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] }) -join "`n"
+                throw "az rest GET failed with exit code $exitCode for ${Uri}: $errorOutput"
+            }
+            $jsonText = ($output | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] }) -join "`n"
+            return $jsonText | ConvertFrom-Json
         }
         if (-not $JsonBody -or -not $JsonBody.Trim()) {
             throw "Request body is empty."
@@ -202,10 +212,14 @@ function Invoke-ArmRest {
         $tempFile = [System.IO.Path]::GetTempFileName()
         try {
             $JsonBody | Out-File -FilePath $tempFile -Encoding utf8
+            $prevEA = $ErrorActionPreference
+            $ErrorActionPreference = "Continue"
             $output = az rest --method put --uri $Uri --headers "Content-Type=application/json" --body "@$tempFile" 2>&1
-            if ($LASTEXITCODE -ne 0) {
+            $exitCode = $LASTEXITCODE
+            $ErrorActionPreference = $prevEA
+            if ($exitCode -ne 0) {
                 $errorOutput = ($output | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] }) -join "`n"
-                throw "az rest PUT failed with exit code $LASTEXITCODE for ${Uri}: $errorOutput"
+                throw "az rest PUT failed with exit code $exitCode for ${Uri}: $errorOutput"
             }
         } finally {
             Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
