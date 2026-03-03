@@ -124,20 +124,54 @@ The **Usage reports → Ingestion** tab provides:
 
 ##### Option B — Workspace Usage Report workbook
 
-Microsoft Sentinel also provides a classic workbook-based dashboard:
+The **Workspace Usage Report** is a community-driven workbook (created by Clive Watson) that gives you deep visibility into ingestion costs, latency, and operational health — all from within the Defender portal.
 
-1. Navigate to **Microsoft Sentinel** → **Threat management** → **Workbooks**
+**Opening the workbook in the Defender portal:**
+
+1. In the Microsoft Defender portal, navigate to **Microsoft Sentinel** → **Threat management** → **Workbooks**
 2. Search for **Workspace Usage Report** in the templates
-3. Click **View saved workbook** (or **Save** it first if not yet saved)
+3. Click **Save** (if not yet saved), then **View saved workbook**
 
-The workbook shows:
+> **Tip:** If the workbook is not available in templates, install it from **Content Hub** → search for "Workspace Usage Report".
 
-- **Daily ingestion volume** by table
-- **Ingestion trends** over time
-- **Billable vs free** data breakdown
-- **Agent health** and data connector status
+Once open, you can select your **Subscription**, **Workspace**, and **Time Range** at the top. Toggle **Help** to **Yes** for additional troubleshooting queries and guidance.
 
-> **Tip:** If the workbook is not available, you can install it from **Content Hub** → search for "Workspace Usage Report".
+The workbook is organised into several tabs:
+
+| Tab | What it shows |
+|---|---|
+| **Workspace Info** | Table inventory, daily ingestion averages, table size trends, LA query audit data |
+| **Latency** | Average, minimum, and maximum ingestion latency per table; agent heartbeat health |
+| **Cost Analysis** | Table pricing estimates, capacity trend projections, top costs by table/resource/EventID |
+| **Microsoft Sentinel** | Sentinel-specific usage, watchlists, threat intelligence metrics, enabled connectors |
+| **Regular Checks (D/W/M)** | Daily, weekly, and monthly operational checklists with data connector health monitoring |
+
+**Cost Analysis — Table Analysis view**
+
+The **Cost Analysis** tab breaks down costs across multiple dimensions. The **Table Analysis** sub-tab shows:
+
+- **Top billable tables** — ranked by estimated price, with table size and billable status
+- **Top 10 costs by resource** — which data sources (VMs, appliances) contribute the most data
+- **Top 10 costs by EventID** — pinpoints individual Windows event types driving ingestion (e.g., Event 4625 failed logons, Event 8002 process execution)
+- **Top 20 costs by Event and Computer** — correlates specific events to specific machines, so you can identify a noisy computer + event combination
+
+<img src="../Images/OnboardingImage34.png" alt="Workspace Usage Report — Cost Analysis Table Analysis view showing top billable tables, costs by resource, and costs by EventID" width="800">
+
+> **Key insight:** If a single EventID dominates the cost chart (e.g., Event 4625 at 84 MB), consider filtering it at the DCR level or moving that table to Basic logs.
+
+**Regular Checks — Data Connector Health**
+
+The **Regular Checks (D/W/M)** tab provides daily, weekly, and monthly operational checklists based on community best practices. The **Daily** checks include:
+
+- **Data Connector Accuracy** — toggle between fast (~1 hour) and slow (~1 minute) accuracy to check connector freshness
+- **Data Connector list** — shows each table's last ingest time, GB ingested in the last 24 hours, billable status, and whether the connector is delayed (> 24 hours since last data)
+- **Table ingestion change** — highlights tables with a significant percentage drop compared to the previous day (e.g., a 99.99% drop in `AzureDiagnostics` signals a broken connector)
+
+<img src="../Images/OnboardingImage35.png" alt="Workspace Usage Report — Regular Checks tab showing data connector health and table ingestion changes" width="800">
+
+> **Tip:** Check the **Regular Checks** tab as part of your daily SOC routine. A connector showing "Delayed > 24h" with 0 GB ingested means you have a blind spot — investigate the source system immediately.
+
+> **Reference:** [Usage reporting for Azure Sentinel — Clive Watson](https://techcommunity.microsoft.com/blog/microsoftsentinelblog/usage-reporting-for-azure-sentinel/1267383)
 
 #### Step 5 — Cost Optimisation Strategies
 
