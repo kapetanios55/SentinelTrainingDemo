@@ -1135,12 +1135,21 @@ function Send-Records {
                     $isInvalidStream = $true
                 }
 
-                $isRetryable = $statusCode -in @(429, 500, 502, 503, 504)
+                $isTransportError = $false
+                if ($exception -and ($exception.Message -match "forcibly closed|underlying connection|transport connection|connection was closed|ReceiveFailure|SendFailure|ConnectFailure|KeepAliveFailure")) {
+                    $isTransportError = $true
+                } elseif ($exception.InnerException -and ($exception.InnerException.Message -match "forcibly closed|underlying connection|transport connection|connection was closed")) {
+                    $isTransportError = $true
+                }
+
+                $isRetryable = ($statusCode -in @(429, 500, 502, 503, 504)) -or $isTransportError
                 if (($isInvalidStream -or $isRetryable) -and $attempt -lt ($maxAttempts - 1)) {
                     $attempt++
                     $delaySeconds = if ($retryAfterSeconds -and $retryAfterSeconds -gt 0) { $retryAfterSeconds } else { [math]::Min(30, [math]::Pow(2, $attempt)) }
                     if ($isInvalidStream) {
                         Write-Host "InvalidStream detected. Waiting for DCR propagation (attempt $attempt/$maxAttempts)..."
+                    } elseif ($isTransportError) {
+                        Write-Host "Transport error (connection reset). Retrying in $delaySeconds seconds (attempt $attempt/$maxAttempts)..."
                     } else {
                         Write-Host "Transient ingest error (status $statusCode). Retrying in $delaySeconds seconds (attempt $attempt/$maxAttempts)..."
                     }
