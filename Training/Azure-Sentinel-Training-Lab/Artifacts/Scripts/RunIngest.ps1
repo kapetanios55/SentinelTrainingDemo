@@ -3,8 +3,6 @@ param(
 
     [string]$ResourceGroupName,
 
-    [string]$Location,
-
     [string]$WorkspaceName,
 
     [string]$RepoZipUrl = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
@@ -50,9 +48,6 @@ if (-not $SubscriptionId) {
 if (-not $ResourceGroupName) {
     $ResourceGroupName = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingResourceGroupName'
 }
-if (-not $Location) {
-    $Location = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingLocation'
-}
 if (-not $WorkspaceName) {
     $WorkspaceName = Get-OptionalAutomationVariableValue -Name 'SentinelTrainingWorkspaceName'
 }
@@ -66,11 +61,10 @@ if (-not $SubscriptionId) {
 
 $SubscriptionId = ConvertTo-RunbookStringValue -Value $SubscriptionId
 $ResourceGroupName = ConvertTo-RunbookStringValue -Value $ResourceGroupName
-$Location = ConvertTo-RunbookStringValue -Value $Location
 $WorkspaceName = ConvertTo-RunbookStringValue -Value $WorkspaceName
 
-if (-not $SubscriptionId -or -not $ResourceGroupName -or -not $Location -or -not $WorkspaceName) {
-    throw "Missing required runbook parameters. Provide SubscriptionId/ResourceGroupName/Location/WorkspaceName via jobSchedule parameters or set Automation variables: SentinelTrainingSubscriptionId, SentinelTrainingResourceGroupName, SentinelTrainingLocation, SentinelTrainingWorkspaceName."
+if (-not $SubscriptionId -or -not $ResourceGroupName -or -not $WorkspaceName) {
+    throw "Missing required runbook parameters. Provide SubscriptionId/ResourceGroupName/WorkspaceName via jobSchedule parameters or set Automation variables: SentinelTrainingSubscriptionId, SentinelTrainingResourceGroupName, SentinelTrainingWorkspaceName."
 }
 
 $workdir = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
@@ -98,7 +92,6 @@ if (-not (Test-Path -Path $templatesPath)) {
 $ingestArgs = @{
     SubscriptionId = $SubscriptionId
     ResourceGroupName = $ResourceGroupName
-    Location = $Location
     WorkspaceName = $WorkspaceName
     TelemetryPath = $customTelemetryPath
     BuiltInTelemetryPath = $builtInTelemetryPath

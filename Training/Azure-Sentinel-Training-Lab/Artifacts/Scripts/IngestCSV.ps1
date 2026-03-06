@@ -21,7 +21,8 @@ Azure subscription ID.
 Resource group containing the Log Analytics workspace and DCR/DCE resources.
 
 .PARAMETER Location
-Azure region (e.g., eastus).
+Azure region for DCE/DCR resources (e.g., eastus). Optional - when omitted the
+script automatically uses the location of the Log Analytics workspace.
 
 .PARAMETER WorkspaceName
 Log Analytics workspace name. Used to resolve the workspace resource ID when not provided.
@@ -94,7 +95,6 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$ResourceGroupName,
 
-    [Parameter(Mandatory = $true)]
     [string]$Location,
 
     [Parameter(Mandatory = $true)]
@@ -309,25 +309,23 @@ function Get-AccessToken {
     return $token
 }
 
-function Resolve-WorkspaceResourceId {
+function Resolve-WorkspaceInfo {
     param(
         [string]$WorkspaceName,
         [string]$ResourceGroupName,
         [string]$SubscriptionId
     )
 
-    if (Assert-AzCli) {
-        $id = az monitor log-analytics workspace show -g $ResourceGroupName -n $WorkspaceName --subscription $SubscriptionId --query id -o tsv
-    } else {
-        $apiVersion = "2022-10-01"
-        $uri = "https://management.azure.com/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/${WorkspaceName}?api-version=${apiVersion}"
-        $workspace = Invoke-ArmRest -Method "GET" -Uri $uri
-        $id = $workspace.id
+    $apiVersion = "2022-10-01"
+    $uri = "https://management.azure.com/subscriptions/${SubscriptionId}/resourceGroups/${ResourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/${WorkspaceName}?api-version=${apiVersion}"
+    $workspace = Invoke-ArmRest -Method "GET" -Uri $uri
+    if (-not $workspace -or -not $workspace.id) {
+        throw "Unable to resolve workspace. Check the workspace name and resource group."
     }
-    if (-not $id) {
-        throw "Unable to resolve workspace resource ID. Check the workspace name and resource group."
+    return @{
+        Id       = $workspace.id
+        Location = $workspace.location
     }
-    return $id
 }
 
 function Initialize-CustomTable {
@@ -1195,8 +1193,15 @@ if (-not (Test-Path -Path $TemplatesOutputPath)) {
     New-Item -ItemType Directory -Path $TemplatesOutputPath -Force | Out-Null
 }
 
-if (-not $WorkspaceResourceId) {
-    $WorkspaceResourceId = Resolve-WorkspaceResourceId -WorkspaceName $WorkspaceName -ResourceGroupName $ResourceGroupName -SubscriptionId $SubscriptionId
+if (-not $WorkspaceResourceId -or -not $Location) {
+    $wsInfo = Resolve-WorkspaceInfo -WorkspaceName $WorkspaceName -ResourceGroupName $ResourceGroupName -SubscriptionId $SubscriptionId
+    if (-not $WorkspaceResourceId) {
+        $WorkspaceResourceId = $wsInfo.Id
+    }
+    if (-not $Location) {
+        $Location = $wsInfo.Location
+        Write-Host "Using workspace location: $Location"
+    }
 }
 
 $customCsvFiles = if ($BuiltInOnly) { @() } else { @((Get-ChildItem -Path $TelemetryPath -Filter "*.csv")) }
