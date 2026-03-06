@@ -76,7 +76,20 @@ if (-not (Test-Path -Path $workdir)) {
     New-Item -ItemType Directory -Path $workdir | Out-Null
 }
 
-Invoke-WebRequest -Uri $RepoZipUrl -OutFile $repoZip
+$maxAttempts = 4
+for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+    try {
+        Invoke-WebRequest -Uri $RepoZipUrl -OutFile $repoZip -UseBasicParsing
+        break
+    } catch {
+        if ($attempt -eq $maxAttempts) {
+            throw "Failed to download repo ZIP after $maxAttempts attempts. Last error: $_"
+        }
+        $delay = [math]::Min(30, [math]::Pow(2, $attempt))
+        Write-Warning "Download attempt $attempt failed: $($_.Exception.Message). Retrying in ${delay}s..."
+        Start-Sleep -Seconds $delay
+    }
+}
 if (Test-Path -Path $repoDir) {
     Remove-Item -Recurse -Force $repoDir
 }
