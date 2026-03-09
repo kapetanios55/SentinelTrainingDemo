@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.5",
+    "contentVersion": "1.0.6",
     "parameters": {
         "location": {
             "type": "string",
@@ -104,8 +104,8 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://raw.githubusercontent.com/kapetanios55/SentinelTrainingDemo/master/Training/Microsoft-Sentinel-Training-Lab/",
-        "sourceId": "sentineltrainingdemo.microsoft-sentinel-training-lab",
+        "_artifactsLocation": "https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Solutions/Training/Microsoft-Sentinel-Training-Lab/",
+        "sourceId": "azuresentinel.azure-sentinel-solution-azuretraininglab",
         "_sourceId": "[variables('sourceId')]",
         "workbookContentId": "ATLInvestigationInsights",
         "_workbookContentId": "[variables('workbookContentId')]",
@@ -267,7 +267,7 @@
                                 "logProgress": true,
                                 "logVerbose": true,
                                 "publishContentLink": {
-                                    "uri": "[concat('https://raw.githubusercontent.com/kapetanios55/SentinelTrainingDemo/master/Training/Microsoft-Sentinel-Training-Lab/Artifacts/Scripts/RunIngest.ps1', '?v=', parameters('scheduleName'))]"
+                                    "uri": "[concat('https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Solutions/Training/Microsoft-Sentinel-Training-Lab/Artifacts/Scripts/RunIngest.ps1', '?v=', parameters('scheduleName'))]"
                                 }
                             }
                         },
@@ -512,7 +512,7 @@
                 "[resourceId('Microsoft.Resources/deployments','workspaceCreation')]"
             ],
             "properties": {
-                "version": "1.0.5",
+                "version": "1.0.6",
                 "kind": "Solution",
                 "contentId": "[variables('_sourceId')]",
                 "parentId": "[variables('_sourceId')]",
@@ -528,8 +528,8 @@
                 "support": {
                     "tier": "Community",
                     "email": "support@microsoft.com",
-                    "name": "SentinelTrainingDemo",
-                    "link": "https://github.com/kapetanios55/SentinelTrainingDemo"
+                    "name": "Microsoft",
+                    "link": "https://github.com/Azure/Azure-Sentinel"
                 },
                 "dependencies": {
                     "operator": "AND",
@@ -537,42 +537,42 @@
                         {
                             "kind": "Workbook",
                             "contentId": "[variables('_workbookContentId')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId2')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId3')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "Playbook",
                             "contentId": "[variables('_playbookContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "Watchlist",
                             "contentId": "[variables('_watchlistContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "HuntingQuery",
                             "contentId": "[variables('_huntingQueryContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "HuntingQuery",
                             "contentId": "[variables('_huntingQueryContentId2')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         }
                     ]
                 },
@@ -599,12 +599,12 @@
                 "[resourceId('Microsoft.Resources/deployments','workspaceCreation')]"
             ],
             "properties": {
-                "version": "1.0.5",
+                "version": "1.0.6",
                 "kind": "Solution",
                 "contentSchemaVersion": "3.0.0",
                 "contentId": "[variables('_sourceId')]",
                 "displayName": "Sentinel Training Lab (Demo)",
-                "publisherDisplayName": "SentinelTrainingDemo",
+                "publisherDisplayName": "Microsoft",
                 "descriptionHtml": "<p>Microsoft Sentinel Training Lab solution providing workbooks, analytics rules, playbooks, watchlists and hunting queries for hands-on training.</p>",
                 "icon": "",
                 "source": {
@@ -619,8 +619,8 @@
                 "support": {
                     "tier": "Community",
                     "email": "support@microsoft.com",
-                    "name": "SentinelTrainingDemo",
-                    "link": "https://github.com/kapetanios55/SentinelTrainingDemo"
+                    "name": "Microsoft",
+                    "link": "https://github.com/Azure/Azure-Sentinel"
                 },
                 "dependencies": {
                     "operator": "AND",
@@ -628,42 +628,42 @@
                         {
                             "kind": "Workbook",
                             "contentId": "[variables('_workbookContentId')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId2')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "AnalyticsRule",
                             "contentId": "[variables('_alertRuleContentId3')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "Playbook",
                             "contentId": "[variables('_playbookContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "Watchlist",
                             "contentId": "[variables('_watchlistContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "HuntingQuery",
                             "contentId": "[variables('_huntingQueryContentId1')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         },
                         {
                             "kind": "HuntingQuery",
                             "contentId": "[variables('_huntingQueryContentId2')]",
-                            "version": "1.0.5"
+                            "version": "1.0.6"
                         }
                     ]
                 },

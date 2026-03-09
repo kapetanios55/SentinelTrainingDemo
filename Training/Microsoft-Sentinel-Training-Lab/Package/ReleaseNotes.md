@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.0.6
+
+- Replaced ZIP-based repo download with targeted per-file downloads via raw GitHub URLs
+- Pointed all URLs to official Azure/Azure-Sentinel repository (Solutions/Training path)
+- Updated sourceId to match existing Content Hub solution for seamless upgrades
+
 ## v1.0.5
 
 - Added Content Hub V3 contentPackages resource for install/update/uninstall lifecycle

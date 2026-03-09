@@ -42,23 +42,15 @@
 .PARAMETER ClientSecret
     Client secret of the service principal.
 
-.PARAMETER RepoZipUrl
-    URL of the repository zip archive. Defaults to the master branch.
-
-.PARAMETER RepoRootName
-    Folder name after extracting the zip (GitHub convention).
-
-.PARAMETER RulesRelativePath
-    Path inside the extracted repo to the rules JSON file.
+.PARAMETER RulesUrl
+    Direct URL to the detection rules JSON file. Defaults to the master branch.
 #>
 param(
     [string]$ManagedIdentityClientId,
     [string]$TenantId,
     [string]$ClientId,
     [string]$ClientSecret,
-    [string]$RepoZipUrl     = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
-    [string]$RepoRootName   = "SentinelTrainingDemo-master",
-    [string]$RulesRelativePath = "Training/Microsoft-Sentinel-Training-Lab/Artifacts/DetectionRules/rules.json"
+    [string]$RulesUrl = "https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Solutions/Training/Microsoft-Sentinel-Training-Lab/Artifacts/DetectionRules/rules.json"
 )
 
 $ErrorActionPreference = "Stop"
@@ -113,30 +105,18 @@ $headers = @{
 $retryMaxAttempts  = 6
 $retryDelaySeconds = 300
 
-# ── Download & extract repo ──────────────────────────────────────────────────
-$workdir  = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
-$repoZip  = Join-Path -Path $workdir  -ChildPath "repo.zip"
-$repoDir  = Join-Path -Path $workdir  -ChildPath $RepoRootName
-
+# ── Download rules file ──────────────────────────────────────────────────────
+$workdir = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
 if (-not (Test-Path -Path $workdir)) {
     New-Item -ItemType Directory -Path $workdir | Out-Null
 }
 
-Write-Output "Downloading repository archive..."
-Invoke-WebRequest -Uri $RepoZipUrl -OutFile $repoZip
-if (Test-Path -Path $repoDir) {
-    Remove-Item -Recurse -Force $repoDir
-}
-Expand-Archive -Path $repoZip -DestinationPath $workdir -Force
-
-# ── Load rule definitions ────────────────────────────────────────────────────
-$rulesFile = Join-Path -Path $repoDir -ChildPath $RulesRelativePath
-if (-not (Test-Path -Path $rulesFile)) {
-    throw "Rules file not found: $rulesFile"
-}
+$rulesFile = Join-Path -Path $workdir -ChildPath "rules.json"
+Write-Output "Downloading rules file from $RulesUrl ..."
+Invoke-WebRequest -Uri $RulesUrl -OutFile $rulesFile -UseBasicParsing
 
 $rules = Get-Content -Path $rulesFile -Raw | ConvertFrom-Json
-Write-Output "Loaded $($rules.Count) detection rule(s) from $RulesRelativePath"
+Write-Output "Loaded $($rules.Count) detection rule(s)"
 
 # ── Fetch existing rules for idempotency ─────────────────────────────────────
 $graphBaseUrl   = "https://graph.microsoft.com/beta/security/rules/detectionRules"
