@@ -58,7 +58,7 @@ param(
     [string]$ClientSecret,
     [string]$RepoZipUrl     = "https://github.com/kapetanios55/SentinelTrainingDemo/archive/refs/heads/master.zip",
     [string]$RepoRootName   = "SentinelTrainingDemo-master",
-    [string]$RulesRelativePath = "Training/Azure-Sentinel-Training-Lab/Artifacts/DetectionRules/rules.json"
+    [string]$RulesRelativePath = "Training/Microsoft-Sentinel-Training-Lab/Artifacts/DetectionRules/rules.json"
 )
 
 $ErrorActionPreference = "Stop"
