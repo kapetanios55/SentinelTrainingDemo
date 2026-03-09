@@ -5,7 +5,7 @@
 
 ---
 
-### Objective
+## Objective
 
 Create a **Microsoft Sentinel automation rule** that automatically adds tags and adjusts severity when a specific alert fires with a specific entity. This exercise demonstrates how automation rules streamline SOC triage without requiring a full playbook (Logic App).
 
@@ -37,9 +37,7 @@ Look for incidents created by the lab's detection rules. You should see incident
 - `Lab Stage 6 - Large data exfiltration to external IP`
 - `Lab [S4] [Okta] Account Takeover Chain`
 
-<p align="center">
-<img src="../Images/OnboardingImage29.png?raw=true">
-</p>
+![Sentinel incidents list](../Images/OnboardingImage29.png?raw=true)
 
 For this exercise, we will create automation rules targeting two scenarios:
 
@@ -51,17 +49,15 @@ For this exercise, we will create automation rules targeting two scenarios:
 1. Navigate to **Microsoft Sentinel** → **Configuration** → **Automation**
 2. Click **+ Create** → **Automation rule**
 
-<p align="center">
-<img src="../Images/OnboardingImage30.png?raw=true">
-</p>
+   ![Automation rule creation dialog](../Images/OnboardingImage30.png?raw=true)
 
 3. Fill in the rule details:
 
-| Field | Value |
-|---|---|
-| **Name** | `Tag port scan incidents` |
-| **Trigger** | When incident is created |
-| **Conditions** | |
+   | Field | Value |
+   | --- | --- |
+   | **Name** | `Tag port scan incidents` |
+   | **Trigger** | When incident is created |
+   | **Conditions** | |
 
 4. Under **Conditions**, configure:
 
@@ -91,10 +87,10 @@ Create a second automation rule for the Okta account takeover scenario:
 1. Click **+ Create** → **Automation rule**
 2. Fill in the details:
 
-| Field | Value |
-|---|---|
-| **Name** | `Escalate Okta account takeover` |
-| **Trigger** | When incident is created |
+   | Field | Value |
+   | --- | --- |
+   | **Name** | `Escalate Okta account takeover` |
+   | **Trigger** | When incident is created |
 
 3. Under **Conditions**, add two conditions:
 
@@ -131,7 +127,7 @@ Automation rules execute in **priority order** (lowest number first). If multipl
 Review the automation rules list:
 
 | Order | Name | Trigger | Conditions | Actions |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | 1 | Tag port scan incidents | Incident created | Rule name contains "port scan" | Add tags: reconnaissance, network |
 | 2 | Escalate Okta account takeover | Incident created | Rule name contains "Account Takeover" AND entity Account contains "attacker" | Add tags: identity-compromise, okta; Change severity → Critical |
 
@@ -153,16 +149,14 @@ If no new incidents have been created since you set up the rules, you can trigge
 
 Then check the incident — it should have the tags `reconnaissance` and `network` applied automatically.
 
-<p align="center">
-<img src="../Images/OnboardingImage31.png?raw=true">
-</p>
+![Incident with auto-applied tags](../Images/OnboardingImage31.png?raw=true)
 
 #### Step 6 — Explore Additional Automation Options
 
 Automation rules support more advanced scenarios that you can explore:
 
 | Action | Use case |
-|---|---|
+| --- | --- |
 | **Assign owner** | Route phishing incidents to the email security team |
 | **Change status** | Auto-close known false positives |
 | **Run playbook** | Trigger a Logic App to send a Teams notification, block an IP, or isolate a device |

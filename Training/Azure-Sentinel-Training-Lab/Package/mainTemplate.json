@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
+    "contentVersion": "1.0.5",
     "parameters": {
         "location": {
             "type": "string",
@@ -581,9 +581,104 @@
                 ],
                 "categories": {
                     "domains": [ "Training and Tutorials" ]
-                }
+                },
+                "keywords": [
+                    "333d839a-47fa-4181-8bfc-d00429b0bb33"
+                ],
+                "firstPublishDate": "2024-01-01",
+                "lastPublishDate": "2026-03-09"
             },
             "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/', variables('_sourceId'))]"
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/providers/contentPackages",
+            "apiVersion": "2023-04-01-preview",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/', variables('_sourceId'))]",
+            "location": "[parameters('workspace-location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments','workspaceCreation')]"
+            ],
+            "properties": {
+                "version": "1.0.5",
+                "kind": "Solution",
+                "contentSchemaVersion": "3.0.0",
+                "contentId": "[variables('_sourceId')]",
+                "displayName": "Sentinel Training Lab (Demo)",
+                "publisherDisplayName": "SentinelTrainingDemo",
+                "descriptionHtml": "<p>Microsoft Sentinel Training Lab solution providing workbooks, analytics rules, playbooks, watchlists and hunting queries for hands-on training.</p>",
+                "icon": "",
+                "source": {
+                    "kind": "Solution",
+                    "name": "Sentinel Training Lab (Demo)",
+                    "sourceId": "[variables('_sourceId')]"
+                },
+                "author": {
+                    "name": "akapetaniou@microsoft.com",
+                    "email": "akapetaniou@microsoft.com"
+                },
+                "support": {
+                    "tier": "Community",
+                    "email": "support@microsoft.com",
+                    "name": "SentinelTrainingDemo",
+                    "link": "https://github.com/kapetanios55/SentinelTrainingDemo"
+                },
+                "dependencies": {
+                    "operator": "AND",
+                    "criteria": [
+                        {
+                            "kind": "Workbook",
+                            "contentId": "[variables('_workbookContentId')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "AnalyticsRule",
+                            "contentId": "[variables('_alertRuleContentId1')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "AnalyticsRule",
+                            "contentId": "[variables('_alertRuleContentId2')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "AnalyticsRule",
+                            "contentId": "[variables('_alertRuleContentId3')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "Playbook",
+                            "contentId": "[variables('_playbookContentId1')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "Watchlist",
+                            "contentId": "[variables('_watchlistContentId1')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "HuntingQuery",
+                            "contentId": "[variables('_huntingQueryContentId1')]",
+                            "version": "1.0.5"
+                        },
+                        {
+                            "kind": "HuntingQuery",
+                            "contentId": "[variables('_huntingQueryContentId2')]",
+                            "version": "1.0.5"
+                        }
+                    ]
+                },
+                "providers": [
+                    "Microsoft"
+                ],
+                "categories": {
+                    "domains": [ "Training and Tutorials" ]
+                },
+                "keywords": [
+                    "333d839a-47fa-4181-8bfc-d00429b0bb33"
+                ],
+                "firstPublishDate": "2024-01-01",
+                "lastPublishDate": "2026-03-09"
+            }
         }
     ],
     "outputs": {

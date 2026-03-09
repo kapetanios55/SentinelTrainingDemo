@@ -5,7 +5,7 @@
 
 ---
 
-### Objective
+## Objective
 
 Use the **MITRE ATT&CK** page in Microsoft Sentinel to visualise which tactics and techniques your detection rules cover, identify gaps, and understand how the lab's attack chain maps to the framework.
 
@@ -16,7 +16,7 @@ The MITRE ATT&CK framework is the industry standard for classifying adversary be
 The lab solution deploys **17 detection rules** covering a multi-stage attack that spans:
 
 | Tactic | Techniques | Rule examples |
-|---|---|---|
+| --- | --- | --- |
 | **Initial Access** | T1566.001, T1566.002, T1078.004 | Phishing emails (MailGuard), AWS console login without MFA |
 | **Execution** | T1204.002 | Malicious payload execution (CrowdStrike) |
 | **Persistence** | T1136.003 | AWS backdoor account creation |
@@ -36,17 +36,15 @@ The lab solution deploys **17 detection rules** covering a multi-stage attack th
 
 #### Step 1 — Open the MITRE ATT&CK Page
 
-1. Open the **Microsoft Defender portal** (https://security.microsoft.com)
+1. Open the [**Microsoft Defender portal**](https://security.microsoft.com)
 2. Navigate to **Microsoft Sentinel** → **Threat management** → **MITRE ATT&CK (Preview)**
 
-<p align="center">
-<img src="../Images/OnboardingImage26.png?raw=true">
-</p>
+![MITRE ATT&CK matrix overview](../Images/OnboardingImage26.png?raw=true)
 
 You will see the ATT&CK matrix with **colour-coded cells**:
 
 | Colour | Meaning |
-|---|---|
+| --- | --- |
 | **Blue (shaded)** | At least one active analytics rule covers this technique |
 | **Grey / unshaded** | No rule currently covers this technique |
 
@@ -60,9 +58,7 @@ By default, the matrix shows all coverage sources (analytics rules, hunting quer
 2. Under **Simulated**, deselect all options
 3. Under **Active**, ensure **Analytics rules** is selected
 
-<p align="center">
-<img src="../Images/OnboardingImage27.png?raw=true">
-</p>
+![Filtered analytics rules coverage](../Images/OnboardingImage27.png?raw=true)
 
 The matrix now reflects only your scheduled detection rules. You should see coverage across multiple tactics from the lab's deployed rules.
 
@@ -76,9 +72,7 @@ A side panel opens showing:
 - List of **analytics rules** mapped to it — you should see rules like `Lab Stage 3.5 Internal Port Scan Detected (Palo Alto)` and `Lab [E2] [Palo Alto] Port Scan Detection`
 - Coverage from **hunting queries** and **threat intelligence** (if applicable)
 
-<p align="center">
-<img src="../Images/OnboardingImage28.png?raw=true">
-</p>
+![Technique detail side panel](../Images/OnboardingImage28.png?raw=true)
 
 > **Observation:** Notice that some techniques — like **T1046** — have _both_ a stage rule (always enabled) and an exercise rule (disabled by default). The stage rules represent the SOC baseline; the exercise rules are for students to practise.
 
@@ -87,7 +81,7 @@ A side panel opens showing:
 Scroll through the matrix and look for **unshaded cells** in critical tactics. Common gaps you may notice in the lab:
 
 | Tactic | Missing techniques | Why |
-|---|---|---|
+| --- | --- | --- |
 | **Lateral Movement** | T1021 (Remote Services) | No east-west movement data in the current telemetry |
 | **Collection** | T1560 (Archive Collected Data) | Exfiltration is detected at the network level, not at the archiving stage |
 | **Resource Development** | T1583 (Acquire Infrastructure) | Pre-attack activity — out of scope for SOC telemetry |
