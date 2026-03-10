@@ -66,33 +66,32 @@ if (-not $SubscriptionId -or -not $ResourceGroupName -or -not $WorkspaceName) {
     throw "Missing required runbook parameters. Provide SubscriptionId/ResourceGroupName/WorkspaceName via jobSchedule parameters or set Automation variables: SentinelTrainingSubscriptionId, SentinelTrainingResourceGroupName, SentinelTrainingWorkspaceName."
 }
 
-# ── File manifests ───────────────────────────────────────────────────────────
-$customCsvFiles = @(
-    "AuditLogsHunting_CL.csv",
-    "azureActivity_adele_CL.csv",
-    "AzureActivity_CL.csv",
-    "disable_accounts_CL.csv",
-    "MailGuard365_Threats_CL.csv",
-    "model_evasion_detection_CL.csv",
-    "OfficeActivity_CL.csv",
-    "office_activity_inbox_rule_CL.csv",
-    "OktaV2_CL.csv",
-    "SEG_MailGuard_CL.csv",
-    "sign-in_adelete_CL.csv",
-    "solarigate-beacon-umbrella_CL.csv"
-)
+# ── Derive GitHub API URL from raw content URL ──────────────────────────────
+# raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
+# -> api.github.com/repos/{owner}/{repo}/contents/{path}?ref={branch}
+if ($RepoBaseUrl -match '^https://raw\.githubusercontent\.com/([^/]+)/([^/]+)/([^/]+)/(.+)$') {
+    $apiOwner  = $Matches[1]
+    $apiRepo   = $Matches[2]
+    $apiBranch = $Matches[3]
+    $apiPath   = $Matches[4]
+    $apiBase   = "https://api.github.com/repos/$apiOwner/$apiRepo/contents/$apiPath"
+    $apiQuery  = "?ref=$apiBranch"
+} else {
+    throw "RepoBaseUrl must be a raw.githubusercontent.com URL. Got: $RepoBaseUrl"
+}
 
-$builtInCsvFiles = @(
-    "AWSCloudTrail.csv",
-    "CommonSecurityLog.csv",
-    "CrowdStrikeAlerts.csv",
-    "CrowdStrikeCases.csv",
-    "CrowdStrikeDetections.csv",
-    "CrowdStrikeHosts.csv",
-    "CrowdStrikeVulnerabilities.csv",
-    "GCPAuditLogs.csv",
-    "SecurityEvents.csv"
-)
+function Get-CsvFileList {
+    param([string]$SubFolder)
+    $url = "$apiBase/$SubFolder$apiQuery"
+    $headers = @{ "User-Agent" = "SentinelTrainingLab"; "Accept" = "application/vnd.github.v3+json" }
+    $response = Invoke-RestMethod -Uri $url -Headers $headers -UseBasicParsing
+    return @($response | Where-Object { $_.name -like "*.csv" } | ForEach-Object { $_.name })
+}
+
+Write-Output "Discovering CSV files from repo..."
+$customCsvFiles  = Get-CsvFileList -SubFolder "Telemetry/Custom"
+$builtInCsvFiles = Get-CsvFileList -SubFolder "Telemetry/BuildIn"
+Write-Output "Found $($customCsvFiles.Count) custom and $($builtInCsvFiles.Count) built-in CSVs."
 
 # ── Create local folder structure ────────────────────────────────────────────
 $workdir              = Join-Path -Path $env:TEMP -ChildPath "sentinel-training-demo"
