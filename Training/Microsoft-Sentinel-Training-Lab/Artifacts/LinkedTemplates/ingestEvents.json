@@ -13,6 +13,13 @@
             "metadata": {
                 "description": "UTC start time for the one-time schedule"
             }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for the resources"
+            }
         }
     },
     "functions": [],
@@ -24,9 +31,9 @@
     "resources": [
         {
             "type": "Microsoft.Automation/automationAccounts",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2024-10-23",
             "name": "[variables('automationAccountName')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "identity": {
                 "type": "SystemAssigned"
             },
@@ -38,9 +45,9 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/runbooks",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/', variables('runbookName'))]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
             ],
@@ -55,7 +62,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/schedules",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/', variables('scheduleName'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -68,7 +75,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/SentinelTrainingSubscriptionId')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -80,7 +87,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/SentinelTrainingResourceGroupName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -92,19 +99,19 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/SentinelTrainingLocation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
             ],
             "properties": {
                 "isEncrypted": false,
-                "value": "[concat('\"', resourceGroup().location, '\"')]"
+                "value": "[concat('\"', parameters('location'), '\"')]"
             }
         },
         {
             "type": "Microsoft.Automation/automationAccounts/variables",
-            "apiVersion": "2020-01-13-preview",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/SentinelTrainingWorkspaceName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts', variables('automationAccountName'))]"
@@ -116,7 +123,7 @@
         },
         {
             "type": "Microsoft.Automation/automationAccounts/jobSchedules",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2024-10-23",
             "name": "[concat(variables('automationAccountName'), '/', guid(variables('automationAccountName'), variables('runbookName'), variables('scheduleName'), deployment().name))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Automation/automationAccounts/runbooks', variables('automationAccountName'), variables('runbookName'))]",
@@ -136,7 +143,7 @@
                 "parameters": {
                     "SubscriptionId": "[subscription().subscriptionId]",
                     "ResourceGroupName": "[resourceGroup().name]",
-                    "Location": "[resourceGroup().location]",
+                    "Location": "[parameters('location')]",
                     "WorkspaceName": "[parameters('WorkspaceName')]"
                 }
             }
