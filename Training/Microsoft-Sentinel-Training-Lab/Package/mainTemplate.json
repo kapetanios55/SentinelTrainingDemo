@@ -52,6 +52,14 @@
                 "description": "UTC start time for the detection-rules runbook (runs after ingestion)"
             }
         },
+        "detectionRulesAuthMethod": {
+            "type": "string",
+            "defaultValue": "none",
+            "allowedValues": ["none", "uami", "spn"],
+            "metadata": {
+                "description": "Authentication method for detection rules deployment."
+            }
+        },
         "detectionRulesIdentityResourceId": {
             "type": "string",
             "defaultValue": "",

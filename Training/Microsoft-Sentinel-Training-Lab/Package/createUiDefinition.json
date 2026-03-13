@@ -72,7 +72,9 @@
           "defaultValue": "",
           "toolTip": "Full resource ID of the User-Assigned Managed Identity that has CustomDetection.ReadWrite.All.",
           "constraints": {
-            "required": "[equals(basics('detectionRulesAuthMethod'), 'uami')]"
+            "required": "[equals(basics('detectionRulesAuthMethod'), 'uami')]",
+            "regex": "^(/subscriptions/[0-9a-fA-F-]+/resourceGroups/[^/]+/providers/Microsoft\\.ManagedIdentity/userAssignedIdentities/[^/]+)?$",
+            "validationMessage": "Must be a valid User-Assigned Managed Identity resource ID or empty."
           },
           "visible": "[equals(basics('detectionRulesAuthMethod'), 'uami')]"
         },
@@ -114,7 +116,7 @@
             "required": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
           },
           "options": {
-            "hideConfirmation": true
+            "hideConfirmation": false
           },
           "visible": "[equals(basics('detectionRulesAuthMethod'), 'spn')]"
         }
@@ -278,6 +280,7 @@
         "workspace-location": "[resourceGroup().location]",
         "location": "[location()]",
         "workspaceName": "[basics('workspace')]",
+        "detectionRulesAuthMethod": "[basics('detectionRulesAuthMethod')]",
         "detectionRulesIdentityResourceId": "[basics('detectionRulesIdentityResourceId')]",
         "detectionRulesSpnTenantId": "[basics('detectionRulesSpnTenantId')]",
         "detectionRulesSpnClientId": "[basics('detectionRulesSpnClientId')]",
